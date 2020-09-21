@@ -63,6 +63,11 @@
 		7EC69F3F9F722166D4C39BA1 /* libPods-RandomRunIOS-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomRunIOS-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RandomRunIOS/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8CAE3F56DC1BA9C512451065 /* Pods-RandomRunIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomRunIOS.debug.xcconfig"; path = "Target Support Files/Pods-RandomRunIOS/Pods-RandomRunIOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D49C2C20251971B400D18CD8 /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Light.ttf"; path = "../../RRIOS_CLONE/RandomRunIOS/assets/fonts/Raleway-Light.ttf"; sourceTree = "<group>"; };
+		D49C2C21251971B400D18CD8 /* Raleway-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Medium.ttf"; path = "../../RRIOS_CLONE/RandomRunIOS/assets/fonts/Raleway-Medium.ttf"; sourceTree = "<group>"; };
+		D49C2C22251971B400D18CD8 /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Thin.ttf"; path = "../../RRIOS_CLONE/RandomRunIOS/assets/fonts/Raleway-Thin.ttf"; sourceTree = "<group>"; };
+		D49C2C23251971B400D18CD8 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Bold.ttf"; path = "../../RRIOS_CLONE/RandomRunIOS/assets/fonts/Raleway-Bold.ttf"; sourceTree = "<group>"; };
+		D49C2C24251971B400D18CD8 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Regular.ttf"; path = "../../RRIOS_CLONE/RandomRunIOS/assets/fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		D4C4F8D325196934003877AF /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		D4C4F8D425196934003877AF /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D4C4F8D525196934003877AF /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -233,6 +238,11 @@
 				D4C4F8DE25196934003877AF /* Octicons.ttf */,
 				D4C4F8D625196934003877AF /* SimpleLineIcons.ttf */,
 				D4C4F8DD25196934003877AF /* Zocial.ttf */,
+				D49C2C23251971B400D18CD8 /* Raleway-Bold.ttf */,
+				D49C2C20251971B400D18CD8 /* Raleway-Light.ttf */,
+				D49C2C21251971B400D18CD8 /* Raleway-Medium.ttf */,
+				D49C2C24251971B400D18CD8 /* Raleway-Regular.ttf */,
+				D49C2C22251971B400D18CD8 /* Raleway-Thin.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
