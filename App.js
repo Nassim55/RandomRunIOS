@@ -1,45 +1,50 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Dimensions  } from 'react-native';
+import { NativeRouter, Route, Switch, useHistory } from "react-router-native";
+import { useDispatch } from 'react-redux';
 
+// Custom components:
+import LoginPageView from './app/components/LoginPageView';
+import AuthorisedUserView from './app/components/AuthorisedUserView';
+import PrivateRoute from './app/routes/PrivateRoute';
 
-import Geolocation from '@react-native-community/geolocation';
-import MapboxGL from '@react-native-mapbox-gl/maps';
-import { State } from 'react-native-gesture-handler';
-import { TextInput, Button } from 'react-native-paper';
-import Animated, { Easing, sub } from 'react-native-reanimated';
-import { useTransition } from  "react-native-redash/lib/module/v1";
-import ViewShot from "react-native-view-shot";
-import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-native';
-import { useSpring, animated } from 'react-spring/native';
-
-
-const MAPBOX_API_KEY = 'pk.eyJ1IjoibmFzc2ltY2hlbm91ZiIsImEiOiJja2R1NjE2amMzYnl4MzByb3c5YmxlMGY5In0.cBj3YeAh0UMxinxOfhDLIw';
-MapboxGL.setAccessToken(MAPBOX_API_KEY);
+// Custom functions:
+import getData from './app/authentication/getData';
 
 
 const App = () => {
-  return (
-    <View style={styles.appContainer}>
-      <MapboxGL.MapView style = {styles.map} >
+  console.log('App render');
 
-      </MapboxGL.MapView>
-    </View>
+  // Creating dispatch to all updates to redux store:
+  const dispatch = useDispatch();
+
+  // Creating history in order to allow react router re-directs:
+  const history = useHistory();
+
+  useEffect(() => {
+    getData(dispatch, history);
+  }, [])
+  
+  return (
+    <NativeRouter>
+      <View style = {styles.page} >
+        <Switch>
+          <Route exact path='/' component={LoginPageView} />
+          <PrivateRoute path='/usermap' exact={true} component={AuthorisedUserView} />
+        </Switch>
+      </View>
+    </NativeRouter>
   );
 };
 
 const styles = StyleSheet.create({
-  appContainer: {
+  page: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    width: '100%',
-  },
-  map: {
-    height: '50%',
-    width: '50%',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   }
 });
 
