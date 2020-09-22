@@ -34,8 +34,8 @@ const MapboxMap = (props) => {
         sw: mostSouthWesternCoordinates,
         paddingRight: 50,
         paddingLeft: 50,
-        paddingBottom: 50,
-        paddingTop: 250
+        paddingBottom: 500,
+        paddingTop: 50
     };
 
     // Route coordinates that will be rendered on screen:
