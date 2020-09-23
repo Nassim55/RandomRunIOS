@@ -8,6 +8,7 @@ import MapboxMap from './MapboxMap';
 import RouteInfoCard from './RouteInfoCard';
 import UserInfoMenu from './UserInfoMenu';
 import SavedRouteCards from './SavedRouteCards';
+import NeuronIcon from './NeuronIcon';
 
 
 const AuthorisedUserView = (props) => {
@@ -39,6 +40,7 @@ const AuthorisedUserView = (props) => {
           originLongitude={originLongitude}
           originLatitude={originLatitude}
           />
+          <NeuronIcon />
           <UserInfoMenu />
           {
             isRouteCardsShown ?

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { Button } from 'react-native-paper'
 
@@ -54,25 +54,30 @@ const RouteInfoCard = (props) => {
                 finalLineString.coordinates.length > 0 ?
                     <View style = {styles.routeDetailsCard}>
                         <View style={[styles.cardSegments, styles.cardSegmentLeft]}>
-                            <Text style={styles.cardSegmentText}>Distance</Text>
-                            <Text style={styles.cardSegmentText}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
+                                <Text style={styles.cardSegmentTextTop}>Distance</Text>
+                            </View>
+                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
+                                <Text style={styles.cardSegmentTextBottom}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                            </View>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
-                            <Text style={styles.cardSegmentText}>Duration</Text>
-                            <Text style={styles.cardSegmentText}>{timeString}</Text>
+                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
+                                <Text style={styles.cardSegmentTextTop}>Duration</Text>
+                            </View>
+                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
+                                <Text style={styles.cardSegmentTextBottom}>{timeString}</Text>
+                            </View>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentRight]}> 
-
-                                <Button
-                                uppercase={false}
-                                mode="outlined"
-                                onPress={async () => {
-                                    const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI);
-                                }}
-                                >
-                                    Save this route
-                                </Button>
+                            <Pressable 
+                            onPress={async () => {
+                                const mapImageURI = await props.viewShotRef.current.capture();
+                                saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI);
+                            }}
+                            >
+                                <Text>Save Route</Text>
+                            </Pressable>
                         </View>
                     </View>
                 : 
@@ -88,8 +93,8 @@ const styles = StyleSheet.create({
         bottom: '8%',
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'flex-start',
         width: '90%',
-
     },
 
     routeDetailsCard: {
@@ -98,7 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 100
-
     },
     cardSegments: {
         display: 'flex',
@@ -107,15 +111,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontWeight: '600',
         flex: 1,
-        height: '100%',
-        padding: 10,
         backgroundColor: 'white',
         opacity: 0.85,
         margin: 5,
         borderRadius: 15,
+        height: 100,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
-    cardSegmentText: {
-        fontFamily: 'Raleway-Bold'
+    cardSegmentTextContainer: {
+        flex: 1,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardSegmentTextContainerTop: {
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+    },
+    cardSegmentTextContainerBottom: {
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        backgroundColor: '#F24E4E',
+    },
+    cardSegmentTextTop: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 16,
+    },
+    cardSegmentTextBottom: {
+        fontFamily: 'Raleway-Bold',
+        fontSize: 16,
+        color: 'white'
     },
 
 
@@ -126,6 +160,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'white',
+        opacity: 0.85,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -135,10 +170,8 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         borderRadius: 10,
-        opacity: 0.85,
         overflow: 'hidden',
         marginBottom: '4%',
-
     },
     inputDistance: {
         flex: 4,
