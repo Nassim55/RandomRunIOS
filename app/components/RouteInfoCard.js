@@ -16,10 +16,13 @@ import { createNativeWrapper } from 'react-native-gesture-handler';
 const RouteInfoCard = (props) => {
     const dispatch = useDispatch();
 
+    // Linestring object representing the random route: 
     const finalLineString = useSelector(state => state.finalRouteLineString);
 
-
-    
+    // Creating the route duration for an average running speed of 5 meters per second:
+    const date = new Date(0);
+    date.setSeconds(props.displayRouteDistance.toFixed(0) / 5);
+    const timeString = date.toISOString().substr(11, 8);
 
     return (
         <View style={styles.routeDetails}>
@@ -51,12 +54,12 @@ const RouteInfoCard = (props) => {
                 finalLineString.coordinates.length > 0 ?
                     <View style = {styles.routeDetailsCard}>
                         <View style={[styles.cardSegments, styles.cardSegmentLeft]}>
-                            <Text>Distance</Text>
-                            <Text>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                            <Text style={styles.cardSegmentText}>Distance</Text>
+                            <Text style={styles.cardSegmentText}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
-                            <Text>Duration</Text>
-                            <Text>00 hrs 00 mins</Text>
+                            <Text style={styles.cardSegmentText}>Duration</Text>
+                            <Text style={styles.cardSegmentText}>{timeString}</Text>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentRight]}> 
 
@@ -110,8 +113,9 @@ const styles = StyleSheet.create({
         opacity: 0.85,
         margin: 5,
         borderRadius: 15,
-
-
+    },
+    cardSegmentText: {
+        fontFamily: 'Raleway-Bold'
     },
 
 

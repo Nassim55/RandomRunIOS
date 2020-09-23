@@ -41,9 +41,9 @@ const UserInfoMenu = () => {
                 }
             </AnimatedTouchableOpacity>
             <AnimatedView style={fade}>
-                <Pressable style={styles.userInfoMenuButton}>
-                    <SimpleLineIcons name='user' size={24} />
-                    <Text style={styles.userInfoMenuButtonText}>Profile</Text>
+            <Pressable style={styles.userInfoMenuButton}>
+                    <SimpleLineIcons name='map' size={24} />
+                    <Text style={styles.userInfoMenuButtonText}>Map</Text>
                 </Pressable>
                 <Pressable 
                 style={styles.userInfoMenuButton}
@@ -54,6 +54,10 @@ const UserInfoMenu = () => {
                 >
                     <SimpleLineIcons name='directions' size={24} />
                     <Text style={styles.userInfoMenuButtonText}>Routes</Text>
+                </Pressable>
+                <Pressable style={styles.userInfoMenuButton}>
+                    <SimpleLineIcons name='user' size={24} />
+                    <Text style={styles.userInfoMenuButtonText}>Profile</Text>
                 </Pressable>
                 <Link 
                 to='/'
