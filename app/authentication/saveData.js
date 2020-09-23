@@ -1,13 +1,7 @@
-import { Platform, AsyncStorage } from 'react-native';
+import SInfo from 'react-native-sensitive-info';
 
 const saveData = async (token) => {
-    if (Platform.OS === 'android') {
-        try {
-            await AsyncStorage.setItem('token', token);
-        } catch (err) { if (console) console.error(err) };
-    } else if (Platform.OS === 'ios') {
-        console.log('platform is ios');
-    }
+    return SInfo.setItem('token', token, {});
 };
 
 export default saveData;

@@ -1,14 +1,10 @@
-import { AsyncStorage } from 'react-native';
 import { setSavedRoutesResponse } from '../../store/actions';
+import RNSInfo from 'react-native-sensitive-info';
 
 const fetchSavedRoutes = async (dispatch) => {
   try {
     // Retreiving the auth token from storage:
-    if (Platform.OS === 'android') {
-      token = await AsyncStorage.getItem('token');
-    } else if (Platform.OS === 'ios') {
-      token = '05c8bdcfc8605a0b5566bf8343bfcdcf3bb29c45';
-    }
+    token = await RNSInfo.getItem('token', {});
     
     // If a token exists then get saved routes from the database:
     if (token) {

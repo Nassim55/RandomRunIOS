@@ -9,7 +9,6 @@ const userAuthentication = async (username, password, dispatch, history) => {
             body: JSON.stringify({username, password}), 
         });
         const data = await response.json();
-        console.log(data.token)
         if (data.token) {
             saveData(data.token);
             dispatch(setUserAuthenticated(true));
