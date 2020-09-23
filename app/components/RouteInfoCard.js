@@ -11,6 +11,7 @@ import { setRouteDistanceMeters, setMapImageUri } from '../../store/actions';
 import fetchRouteCoords from '../functions/fetchRouteCoords';
 import saveRoute from '../functions/saveRoute';
 import setUserLongitudeAndLatitude from '../functions/setUserLongitudeAndLatitude';
+import { createNativeWrapper } from 'react-native-gesture-handler';
 
 const RouteInfoCard = (props) => {
     const dispatch = useDispatch();
@@ -50,10 +51,12 @@ const RouteInfoCard = (props) => {
                 finalLineString.coordinates.length > 0 ?
                     <View style = {styles.routeDetailsCard}>
                         <View style={[styles.cardSegments, styles.cardSegmentLeft]}>
-                            <Text>{`Distance: ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                            <Text>Distance</Text>
+                            <Text>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
-                            <Text>Duration: 00 hrs 00 mins</Text>
+                            <Text>Duration</Text>
+                            <Text>00 hrs 00 mins</Text>
                         </View>
                         <View style={[styles.cardSegments, styles.cardSegmentRight]}> 
 
@@ -95,10 +98,14 @@ const styles = StyleSheet.create({
 
     },
     cardSegments: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontWeight: '600',
         flex: 1,
         height: '100%',
-        padding: 15,
+        padding: 10,
         backgroundColor: 'white',
         opacity: 0.85,
         margin: 5,
