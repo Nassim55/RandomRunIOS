@@ -52,32 +52,34 @@ const RouteInfoCard = (props) => {
             </View>
             {
                 finalLineString.coordinates.length > 0 ?
-                    <View style = {styles.routeDetailsCard}>
-                        <View style={[styles.cardSegments, styles.cardSegmentLeft]}>
-                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
-                                <Text style={styles.cardSegmentTextTop}>Distance</Text>
+                    <View style={styles.routeCetailsCardAndSaveContainer}>
+                        <View style={styles.routeDetailsCard}>
+                            <View style={[styles.cardSegments, styles.cardSegmentLeft]}>
+                                <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
+                                    <Text style={styles.cardSegmentTextTop}>Distance</Text>
+                                </View>
+                                <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
+                                    <Text style={styles.cardSegmentTextBottom}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                                </View>
                             </View>
-                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
-                                <Text style={styles.cardSegmentTextBottom}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                            <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
+                                <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
+                                    <Text style={styles.cardSegmentTextTop}>Duration</Text>
+                                </View>
+                                <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
+                                    <Text style={styles.cardSegmentTextBottom}>{timeString}</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
-                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerTop]}>
-                                <Text style={styles.cardSegmentTextTop}>Duration</Text>
+                            <View style={styles.cardSegmentRight}> 
+                                <Pressable 
+                                onPress={async () => {
+                                    const mapImageURI = await props.viewShotRef.current.capture();
+                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI);
+                                }}
+                                >
+                                    <Text style={styles.cardSegmentTextSave}>Save</Text>
+                                </Pressable>
                             </View>
-                            <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
-                                <Text style={styles.cardSegmentTextBottom}>{timeString}</Text>
-                            </View>
-                        </View>
-                        <View style={[styles.cardSegments, styles.cardSegmentRight]}> 
-                            <Pressable 
-                            onPress={async () => {
-                                const mapImageURI = await props.viewShotRef.current.capture();
-                                saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI);
-                            }}
-                            >
-                                <Text>Save Route</Text>
-                            </Pressable>
                         </View>
                     </View>
                 : 
@@ -93,10 +95,13 @@ const styles = StyleSheet.create({
         bottom: '8%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '90%',
     },
-
+    routeCetailsCardAndSaveContainer: {
+        width: '100%',
+    },
     routeDetailsCard: {
         display: 'flex',
         flexDirection: 'row',
@@ -116,6 +121,27 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 15,
         height: 100,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    cardSegmentRight: {
+        height: 90,
+        width: 90,
+        borderRadius: 45,
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: '600',
+        opacity: 0.85,
+        margin: 5,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -150,6 +176,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Raleway-Bold',
         fontSize: 16,
         color: 'white'
+    },
+    cardSegmentTextSave: {
+        fontFamily: 'Raleway-Bold',
+        color: '#F24E4E',
+        fontSize: 16,
     },
 
 
