@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "android-dev": "adb reverse tcp:8000 tcp:8000"
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",

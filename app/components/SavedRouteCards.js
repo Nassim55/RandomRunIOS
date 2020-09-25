@@ -20,17 +20,20 @@ const SavedRouteCards = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const aIndex = useTransition(currentIndex);
 
+    console.log(cards)
+
     return (
         <View style={styles.containerSavedRouteCards}>
             <View style={styles.darkenMap} />
             {cards.map(
-                ({ index, distance }) =>
+                ({ index, distance, image }) =>
                     currentIndex < index * step + step && (
                         <Card 
                         key={index}
                         position={sub(index * step, aIndex)}
                         onSwipe={() => setCurrentIndex(prev => prev + step)}
                         distanceMeters={distance}
+                        image={image}
                         />
                 )
             )}

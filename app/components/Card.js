@@ -48,9 +48,7 @@ const Card = (props) => {
                 <View style={styles.routeImageAndDetailsContainer}>
                     <Image
                     style={styles.mapImage}
-                    source={{
-                    uri: '/Users/nassim/Library/Developer/CoreSimulator/Devices/F70A075B-53A5-4A4F-874E-A88A9CDEAE63/data/Containers/Data/Application/96384305-267D-4A90-A9F7-6151FEEDADA9/tmp/ReactNative/0F75771C-EE45-4F39-9527-749632CB8A4A.jpg',
-                    }}
+                    source={{uri: `http://127.0.0.1:8000${props.image}`}}
                     />
                 </View>
                 <Text style={styles.routeDistance}> {(props.distanceMeters / 1000).toFixed(2)}KM </Text>

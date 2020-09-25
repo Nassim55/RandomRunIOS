@@ -8,7 +8,7 @@ const fetchSavedRoutes = async (dispatch) => {
     
     // If a token exists then get saved routes from the database:
     if (token) {
-      const response = await fetch(`http://127.0.0.1:8000/route/getsavedroutes`, {
+      const response = await fetch(`http://127.0.0.1:8000/route/routes/`, {
         method: 'GET',
         headers: {
           'Authorization': `Token ${token}`
