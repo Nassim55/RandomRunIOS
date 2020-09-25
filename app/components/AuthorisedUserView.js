@@ -30,33 +30,33 @@ const AuthorisedUserView = (props) => {
   const isRouteCardsShown = useSelector(state => state.isRouteCardsShown);
 
   return (
-    <ViewShot
-    style={styles.viewshot}
-    ref={viewShotRef}
-    options={{ format: "jpg", quality: 0.9 }}
-    >
-      <View style = {styles.pageContent}>
+    <View style = {styles.pageContent}>
+        <ViewShot
+        style={styles.viewshot}
+        ref={viewShotRef}
+        options={{ format: "jpg", quality: 1 }}
+        >
           <MapboxMap
           originLongitude={originLongitude}
           originLatitude={originLatitude}
           />
-          <NeuronIcon />
-          <UserInfoMenu />
-          {
-            isRouteCardsShown ?
-            <SavedRouteCards />
-            :
-            <RouteInfoCard 
-            isLocationPermissionGranted={isLocationPermissionGranted}
-            originLongitude={originLongitude}
-            originLatitude={originLatitude}
-            routeDistanceMeters={routeDistanceMeters}
-            displayRouteDistance={calculatedRouteDistance}
-            viewShotRef={viewShotRef}
-            />
-          }
-      </View>
-    </ViewShot>
+        </ViewShot>
+        <NeuronIcon />
+        <UserInfoMenu />
+        {
+          isRouteCardsShown ?
+          <SavedRouteCards />
+          :
+          <RouteInfoCard 
+          isLocationPermissionGranted={isLocationPermissionGranted}
+          originLongitude={originLongitude}
+          originLatitude={originLatitude}
+          routeDistanceMeters={routeDistanceMeters}
+          displayRouteDistance={calculatedRouteDistance}
+          viewShotRef={viewShotRef}
+          />
+        }
+    </View>
   );
 };
 

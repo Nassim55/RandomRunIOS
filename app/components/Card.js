@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Text, Image } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image, Alert } from 'react-native';
 import { mix, mixColor, usePanGestureHandler } from 'react-native-redash/lib/module/v1';
 import Animated, { add } from 'react-native-reanimated';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useSpring } from './Animations';
+
+import deleteSavedRoute from '../functions/deleteSavedRoute';
 
 const { width: wWidth } = Dimensions.get('window');
 const width = wWidth * 0.75;
@@ -52,6 +54,32 @@ const Card = (props) => {
                     />
                 </View>
                 <Text style={styles.routeDistance}> {(props.distanceMeters / 1000).toFixed(2)}KM </Text>
+                <View style={styles.deleteRouteButton}> 
+                    <SimpleLineIcons.Button
+                    name='close'
+                    size={24}
+                    color='white'
+                    backgroundColor="#F24E4E"
+                    onPress={() => {
+                        Alert.alert(
+                            'Delete this route?',
+                            'Are you sure you want to permanently delete this route?',
+                            [
+                                { 
+                                    text: 'Keep',
+                                    style: 'cancel'
+                                },
+                                { 
+                                    text: 'Delete',
+                                    style: 'destructive',
+                                    onPress: () => deleteSavedRoute(),
+                                }
+                            ],
+                            { cancelable: false }
+                          );
+                    }}
+                    />  
+                </View>
             </Animated.View>
         </PanGestureHandler>
     );
@@ -83,7 +111,12 @@ const styles = StyleSheet.create({
     routeDistance: {
         position: 'absolute',
         bottom: '10%',
-    }
+    },
+    deleteRouteButton: {
+        position: 'absolute',
+        top: '5%',
+        right: '5%',
+    },
 })
 
 export default Card;
