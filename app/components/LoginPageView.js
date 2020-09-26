@@ -33,7 +33,7 @@ const LoginPageView = () => {
     const toggleHandle = () => {
         setIsSignUp(!isSignUp);
         Animated.timing(translateYAnim, {
-            toValue: isSignUp ? -590 : 0,
+            toValue: isSignUp ? -855 : 0,
             duration: 1000,
             useNativeDriver: true,
         }).start();

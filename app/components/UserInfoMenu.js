@@ -5,6 +5,7 @@ import { useSpring, animated } from 'react-spring/native';
 import { Link } from "react-router-native";
 import { useDispatch, useSelector } from 'react-redux';
 
+
 import deleteData from '../authentication/deleteData';
 
 import { setIsRouteCardsShown } from '../../store/actions';
@@ -13,6 +14,7 @@ import fetchSavedRoutes from '../functions/fetchSavedRoutes';
 
 const UserInfoMenu = () => {
     const dispatch = useDispatch();
+
 
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
     
@@ -41,14 +43,21 @@ const UserInfoMenu = () => {
                 }
             </AnimatedTouchableOpacity>
             <AnimatedView style={fade}>
-            <Pressable style={styles.userInfoMenuButton}>
+            <Pressable 
+            style={styles.userInfoMenuButton}
+            onPress={() => {
+                dispatch(setIsRouteCardsShown(false));
+                setIsNavMenuOpen(false)
+            }}
+            >
                     <SimpleLineIcons name='map' size={24} />
                     <Text style={styles.userInfoMenuButtonText}>Map</Text>
                 </Pressable>
                 <Pressable 
                 style={styles.userInfoMenuButton}
                 onPress={() => {
-                    dispatch(setIsRouteCardsShown(!isRouteCardsShown));
+                    dispatch(setIsRouteCardsShown(true));
+                    setIsNavMenuOpen(false)
                     fetchSavedRoutes(dispatch);
                 }}
                 >

@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 
 // Packages:
 import { sub } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Custom components:
 import Card from './Card';
 
+// Custom function imports:
+import { setIsRouteCardsShown } from '../../store/actions';
+
 
 
 const SavedRouteCards = () => {
+    const dispatch = useDispatch();
+
+
     const savedRoutesResponse = useSelector(state => state.savedRoutesResponse);
     const cards = savedRoutesResponse.map((element, index) => ({...element, index})).reverse();
     const step = 1 / (cards.length - 1);
@@ -22,9 +28,12 @@ const SavedRouteCards = () => {
 
     return (
         <View style={styles.containerSavedRouteCards}>
-            <View style={styles.darkenMap} />
+            <Pressable
+            style={styles.darkenMap}
+            onPress={() => dispatch(setIsRouteCardsShown(false))}
+            />
             {cards.map(
-                ({ index, distance, image }) =>
+                ({ index, distance, image, id }) =>
                     currentIndex < index * step + step && (
                         <Card 
                         key={index}
@@ -32,6 +41,7 @@ const SavedRouteCards = () => {
                         onSwipe={() => setCurrentIndex(prev => prev + step)}
                         distanceMeters={distance}
                         image={image}
+                        savedRouteDatabaseID={id}
                         />
                 )
             )}

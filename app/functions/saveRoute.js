@@ -26,6 +26,7 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI) => {
     }
 
     console.log(mapImageURI)
+    console.log(token)
 
     // Form data about the route that will be posted to the database: 
     const uploadData = new FormData();
@@ -46,6 +47,8 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI) => {
 
       // Converting response to JSON data:
       const data = await response.json();
+
+      console.log(data)
 
   } catch (err) {
     if (console) console.error(err)

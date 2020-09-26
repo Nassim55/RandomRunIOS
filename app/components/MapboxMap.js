@@ -11,13 +11,15 @@ import setUserLongitudeAndLatitude from '../functions/setUserLongitudeAndLatitud
 
 
 // API key:
-const MAPBOX_API_KEY = 'pk.eyJ1IjoibmFzc2ltY2hlbm91ZiIsImEiOiJja2R1NjE2amMzYnl4MzByb3c5YmxlMGY5In0.cBj3YeAh0UMxinxOfhDLIw';
+const MAPBOX_PUBLIC_TOKEN = 'pk.eyJ1IjoibmFzc2ltY2hlbm91ZiIsImEiOiJja2R1NjE2amMzYnl4MzByb3c5YmxlMGY5In0.cBj3YeAh0UMxinxOfhDLIw';
 
 // Style URL:
 const mapboxStyleURL = 'mapbox://styles/nassimchenouf/cke1zrnot0g1619oql47m98cz';
 
-// Connecting to the Mapbox API:
-MapboxGL.setAccessToken(MAPBOX_API_KEY);
+// Authenticating Mapbox API token:
+MapboxGL.setAccessToken(MAPBOX_PUBLIC_TOKEN);
+
+// Only necessary to do set connected on Android operating systems:
 if (Platform.OS === 'android') MapboxGL.setConnected(true);
 
 const MapboxMap = (props) => {

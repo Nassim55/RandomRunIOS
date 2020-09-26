@@ -72,7 +72,7 @@ const Card = (props) => {
                                 { 
                                     text: 'Delete',
                                     style: 'destructive',
-                                    onPress: () => deleteSavedRoute(),
+                                    onPress: () => deleteSavedRoute(props.savedRouteDatabaseID),
                                 }
                             ],
                             { cancelable: false }
