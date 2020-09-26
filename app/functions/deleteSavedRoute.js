@@ -10,8 +10,8 @@ const deleteSavedRoute = async (savedRouteDatabaseID) => {
 
         // Deleting saved route from the database and defining the response: 
         const response = await fetch(`http://127.0.0.1:8000/route/routes/${savedRouteDatabaseID}/`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Token ${token}` }
+            method: 'DELETE',
+            headers: { 'Authorization': `Token ${token}` }
         });
   
         // Converting response to JSON data:

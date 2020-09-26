@@ -29,6 +29,9 @@ const AuthorisedUserView = (props) => {
   // Getting state to determine if UI components should be rendered:
   const isRouteCardsShown = useSelector(state => state.isRouteCardsShown);
 
+
+
+
   return (
     <View style = {styles.pageContent}>
         <ViewShot

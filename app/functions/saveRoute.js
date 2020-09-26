@@ -1,6 +1,6 @@
 import RNSInfo from 'react-native-sensitive-info';
 
-const saveRoute = async (routeDistance, routeCoordinates, mapImageURI) => {
+const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID) => {
   // Try posting a route to the database: 
   try {
     // Checking to see if token exists in sensitive info storage:
@@ -28,9 +28,11 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI) => {
     console.log(mapImageURI)
     console.log(token)
 
+    console.log(userID)
+
     // Form data about the route that will be posted to the database: 
     const uploadData = new FormData();
-    uploadData.append('account', 1);
+    uploadData.append('account', userID);
     uploadData.append('coordinates', routeCoordinates);
     uploadData.append('distance', routeDistance);
     uploadData.append('image', mapImageFileIOS);

@@ -1,28 +1,34 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import { Button } from 'react-native-paper'
 
 // Redux state store imports: 
 import { useDispatch, useSelector } from 'react-redux';
-import { setRouteDistanceMeters, setMapImageUri } from '../../store/actions';
+import { setRouteDistanceMeters } from '../../store/actions';
 
 // Custom functions:
 import fetchRouteCoords from '../functions/fetchRouteCoords';
 import saveRoute from '../functions/saveRoute';
-import setUserLongitudeAndLatitude from '../functions/setUserLongitudeAndLatitude';
-import { createNativeWrapper } from 'react-native-gesture-handler';
+
 
 const RouteInfoCard = (props) => {
+    // Creating a dispatch to allow the Redux state to be updated:
     const dispatch = useDispatch();
 
-    // Linestring object representing the random route: 
+    // Defining variables from Redux state:
     const finalLineString = useSelector(state => state.finalRouteLineString);
+    const userID = useSelector(state => state.userAccountDetails.id);
+    console.log(userID);
+
 
     // Creating the route duration for an average running speed of 5 meters per second:
     const date = new Date(0);
     date.setSeconds(props.displayRouteDistance.toFixed(0) / 5);
     const timeString = date.toISOString().substr(11, 8);
+
+
+  
+
 
     return (
         <View style={styles.routeDetails}>
@@ -74,7 +80,7 @@ const RouteInfoCard = (props) => {
                                 <Pressable 
                                 onPress={async () => {
                                     const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI);
+                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI, userID);
                                 }}
                                 >
                                     <Text style={styles.cardSegmentTextSave}>Save</Text>

@@ -4,7 +4,7 @@ import RNSInfo from 'react-native-sensitive-info';
 const fetchSavedRoutes = async (dispatch) => {
   try {
     // Retreiving the auth token from storage:
-    token = await RNSInfo.getItem('token', {});
+    const token = await RNSInfo.getItem('token', {});
     
     // If a token exists then get saved routes from the database:
     if (token) {
