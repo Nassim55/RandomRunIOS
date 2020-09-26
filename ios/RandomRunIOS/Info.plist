@@ -29,7 +29,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>CFBundleDisplayName</key>
 	<string>RandomRunIOS</string>
 	<key>CFBundleExecutable</key>
@@ -64,7 +64,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>App generates a route from the users location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App generates a route from the users location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
