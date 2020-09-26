@@ -59,7 +59,7 @@ const RouteInfoCard = (props) => {
                                     <Text style={styles.cardSegmentTextTop}>Distance</Text>
                                 </View>
                                 <View style={[styles.cardSegmentTextContainer, styles.cardSegmentTextContainerBottom]}>
-                                    <Text style={styles.cardSegmentTextBottom}>{` ${props.displayRouteDistance.toFixed(0)} meters`}</Text>
+                                    <Text style={styles.cardSegmentTextBottom}>{`${props.displayRouteDistance.toFixed(0)} meters`}</Text>
                                 </View>
                             </View>
                             <View style={[styles.cardSegments, styles.cardSegmentMiddle]}>
