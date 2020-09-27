@@ -39,10 +39,9 @@ const SavedRouteCards = () => {
                         <Card 
                         key={index}
                         position={sub(index * step, aIndex)}
-                        onSwipe={() => {
+                        onSwipeLeft={() => setCurrentIndex(prev => prev + step)}
+                        onSwipeRight={() => {
                             setCurrentIndex(prev => prev + step);
-
-
                         }}
                         onSwipeDown={() => {
                             setCurrentIndex(prev => prev + step);
@@ -52,7 +51,8 @@ const SavedRouteCards = () => {
                                 [
                                     { 
                                         text: 'Keep',
-                                        style: 'cancel'
+                                        style: 'cancel',
+                                        onPress: () => setCurrentIndex(prev => prev - step),
                                     },
                                     { 
                                         text: 'Delete',
