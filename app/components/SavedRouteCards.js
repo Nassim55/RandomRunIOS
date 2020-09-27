@@ -12,11 +12,15 @@ import Card from './Card';
 // Custom function imports:
 import { setIsRouteCardsShown } from '../../store/actions';
 import deleteSavedRoute from '../functions/deleteSavedRoute';
+import { useHistory } from "react-router-native";
 
 
 
 const SavedRouteCards = () => {
     const dispatch = useDispatch();
+
+    // Creating history in order to allow react router re-directs:
+    const history = useHistory();
 
 
     const savedRoutesResponse = useSelector(state => state.savedRoutesResponse);
@@ -27,6 +31,7 @@ const SavedRouteCards = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const aIndex = useTransition(currentIndex);
 
+
     return (
         <View style={styles.containerSavedRouteCards}>
             <Pressable
@@ -34,7 +39,7 @@ const SavedRouteCards = () => {
             onPress={() => dispatch(setIsRouteCardsShown(false))}
             />
             {cards.map(
-                ({ index, distance, image, id }) =>
+                ({ index, distance, image, id, coordinates }) =>
                     currentIndex < index * step + step && (
                         <Card 
                         key={index}
@@ -42,6 +47,9 @@ const SavedRouteCards = () => {
                         onSwipeLeft={() => setCurrentIndex(prev => prev + step)}
                         onSwipeRight={() => {
                             setCurrentIndex(prev => prev + step);
+                            console.log(typeof coordinates);
+                            //dispatch(setFinalRouteLineString(coordinates))
+                            //dispatch(setIsRouteCardsShown(false));
                         }}
                         onSwipeDown={() => {
                             setCurrentIndex(prev => prev + step);

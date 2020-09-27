@@ -30,10 +30,17 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID) =
 
     console.log(userID)
 
+    console.log(routeCoordinates)
+    console.log(typeof routeCoordinates)
+
+    routeCoordinates.toString()
+
+    console.log(routeCoordinates)
+
     // Form data about the route that will be posted to the database: 
     const uploadData = new FormData();
     uploadData.append('account', userID);
-    uploadData.append('coordinates', routeCoordinates);
+    uploadData.append('coordinates', routeCoordinates.toString());
     uploadData.append('distance', routeDistance);
     uploadData.append('image', mapImageFileIOS);
 

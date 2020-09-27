@@ -80,7 +80,7 @@ const RouteInfoCard = (props) => {
                                 <Pressable 
                                 onPress={async () => {
                                     const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates.toString(), mapImageURI, userID);
+                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates, mapImageURI, userID);
                                 }}
                                 >
                                     <Text style={styles.cardSegmentTextSave}>Save</Text>

@@ -46,7 +46,7 @@ const Card = (props) => {
         velocity: velocity.x,
         state,
         snapPoints: [-wWidth, 0, wWidth],
-        onSnap: ([x]) => x !== 0 && props.onSwipeLeft(),
+        onSnap: ([x]) => x !== 0 && props.onSwipeRight(),
     });
     const translateY = add(
         translateYCardOffset,
