@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 
 // Packages:
 import { sub } from 'react-native-reanimated';
@@ -11,6 +11,7 @@ import Card from './Card';
 
 // Custom function imports:
 import { setIsRouteCardsShown } from '../../store/actions';
+import deleteSavedRoute from '../functions/deleteSavedRoute';
 
 
 
@@ -38,10 +39,33 @@ const SavedRouteCards = () => {
                         <Card 
                         key={index}
                         position={sub(index * step, aIndex)}
-                        onSwipe={() => setCurrentIndex(prev => prev + step)}
+                        onSwipe={() => {
+                            setCurrentIndex(prev => prev + step);
+
+
+                        }}
+                        onSwipeDown={() => {
+                            setCurrentIndex(prev => prev + step);
+                            Alert.alert(
+                                'Delete this route?',
+                                'Are you sure you want to permanently delete this route?',
+                                [
+                                    { 
+                                        text: 'Keep',
+                                        style: 'cancel'
+                                    },
+                                    { 
+                                        text: 'Delete',
+                                        style: 'destructive',
+                                        onPress: () => deleteSavedRoute(id),
+                                    }
+                                ],
+                                { cancelable: false }
+                            );
+                        }}
                         distanceMeters={distance}
                         image={image}
-                        savedRouteDatabaseID={id}
+                        step={step}
                         />
                 )
             )}

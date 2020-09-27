@@ -32,9 +32,9 @@ const LoginPageView = () => {
     // Change this to interpolate from 0% to 100%
     const toggleHandle = () => {
         setIsSignUp(!isSignUp);
-        Animated.timing(translateYAnim, {
+        Animated.spring(translateYAnim, {
             toValue: isSignUp ? -855 : 0,
-            duration: 1000,
+            duration: 7000,
             useNativeDriver: true,
         }).start();
     }
