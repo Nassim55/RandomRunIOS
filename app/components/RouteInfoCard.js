@@ -18,7 +18,8 @@ const RouteInfoCard = (props) => {
     // Defining variables from Redux state:
     const finalLineString = useSelector(state => state.finalRouteLineString);
     const userID = useSelector(state => state.userAccountDetails.id);
-    console.log(userID);
+    const mostNorthEasternCoordinates = useSelector(state => state.mostNorthEasternCoordinates);
+    const mostSouthWesternCoordinates = useSelector(state => state.mostSouthWesternCoordinates);
 
 
     // Creating the route duration for an average running speed of 5 meters per second:
@@ -80,7 +81,15 @@ const RouteInfoCard = (props) => {
                                 <Pressable 
                                 onPress={async () => {
                                     const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(props.displayRouteDistance, finalLineString.coordinates, mapImageURI, userID);
+                                    saveRoute(
+                                        props.displayRouteDistance,
+                                        finalLineString.coordinates,
+                                        mapImageURI,
+                                        userID,
+                                        timeString,
+                                        mostNorthEasternCoordinates,
+                                        mostSouthWesternCoordinates
+                                    );
                                 }}
                                 >
                                     <Text style={styles.cardSegmentTextSave}>Save</Text>
