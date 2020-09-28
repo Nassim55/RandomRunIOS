@@ -21,19 +21,9 @@ const Card = (props) => {
     const backgroundColor = mixColor(props.position, '#FFFFFF', '#BFC0C0');
     const translateYCardOffset = mix(props.position, 0 , -120);
     const scale = mix(props.position, 1, 0.85);
-    const cardContentsScale = interpolate(props.position, {
-        inputRange: [0, props.step],
-        outputRange: [1, 0],
-        extrapolate: Extrapolate.CLAMP,
-    });
     const cardContentsOpacity = interpolate(props.position, {
         inputRange: [0, props.step],
-        outputRange: [1, 0],
-        extrapolate: Extrapolate.CLAMP,
-    });
-    const imageBorderRadius = interpolate(props.position, {
-        inputRange: [0, props.step],
-        outputRange: [0, 200],
+        outputRange: [1, 0.15],
         extrapolate: Extrapolate.CLAMP,
     });
 
@@ -41,11 +31,18 @@ const Card = (props) => {
     const {gestureHandler, translation, velocity, state} = usePanGestureHandler();
 
     // When the gesture starts again we want to start from the last position instead of resetting:
-    const translateX = useSpring({ 
+    const translateXLeft = useSpring({ 
         value: translation.x,
         velocity: velocity.x,
         state,
-        snapPoints: [-wWidth, 0, wWidth],
+        snapPoints: [-wWidth, 0],
+        onSnap: ([x]) => x !== 0 && props.onSwipeLeft(),
+    });
+    const translateXRight = useSpring({ 
+        value: translation.x,
+        velocity: velocity.x,
+        state,
+        snapPoints: [0, wWidth],
         onSnap: ([x]) => x !== 0 && props.onSwipeRight(),
     });
     const translateY = add(
@@ -67,36 +64,31 @@ const Card = (props) => {
                 backgroundColor,
                 transform: [
                     { scale },
-                    { translateX },
+                    { translateX: translateXLeft },
+                    { translateX: translateXRight },
                     { translateY },
                 ]
             }]} >
-
                 <View style={[styles.cardViews, styles.routeImageView]}>
                     <Animated.Image
                     source={{uri: `http://127.0.0.1:8000${props.image}`}}
                     style={[styles.routeImage, {
-                        borderRadius: imageBorderRadius,
+
                         opacity: cardContentsOpacity,
-                        transform: [
-                            { scale: cardContentsScale }
-                        ]
+   
                     }]}
                     />
                 </View>
-                <Animated.View style={[styles.cardViews, styles.routeInfoView, {
-                    opacity: cardContentsOpacity,
-                    transform: [
-                        { scale: cardContentsScale }
-                    ]
-                }]}>
-                    <View style={[styles.innerRouteInfoView, styles.innerRouteInfoViewLeft]}>
+                <Animated.View style={[styles.routeInfo, styles.routeInfoLeft, {
+                        opacity: cardContentsOpacity,
+                    }]}>
                         <Text style={styles.routeInfoText}>{`${parseFloat(props.distanceMeters).toFixed(0)} meters`}</Text>
-                    </View>
-                    <View style={[styles.innerRouteInfoView, styles.innerRouteInfoViewRight]}>
+                    </Animated.View>
+                    <Animated.View style={[styles.routeInfo, styles.routeInfoRight, {
+                        opacity: cardContentsOpacity,
+                    }]}>
                         <Text style={styles.routeInfoText}>{`${parseFloat(props.distanceMeters).toFixed(0)} meters`}</Text>
-                    </View>
-                </Animated.View>
+                    </Animated.View>
             </Animated.View>
         </PanGestureHandler>
     );
@@ -124,34 +116,28 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     routeImageView: {
-        flex: 9,
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        overflow: 'hidden',
-    },
-    routeInfoView: {
-        flex: 2,
-        borderBottomLeftRadius: 24,
-        borderBottomRightRadius: 24,
-    },
-
-    innerRouteInfoView: {
-        flex: 1,
         position: 'relative',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1,
+        borderRadius: 24,
         overflow: 'hidden',
+        width: 'auto'
     },
-    innerRouteInfoViewLeft: {
-        borderBottomLeftRadius: 24,
+
+
+
+    routeInfo: {
+        position: 'absolute',
+        bottom: '10%',
+        
     },
-    innerRouteInfoViewRight: {
-        borderBottomRightRadius: 24,
+    routeInfoLeft: {
+        left: '10%',
 
     },
+    routeInfoRight: {
+        right: '10%',
+    },
+
 
 
 
@@ -161,6 +147,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     routeInfoText: {
+        fontSize: 20,
         fontFamily: 'Raleway-Regular'
     },
     deleteRouteButton: {

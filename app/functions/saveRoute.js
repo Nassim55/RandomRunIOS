@@ -25,26 +25,17 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID) =
       type: 'image/jpg'
     }
 
-    console.log(mapImageURI)
-    console.log(token)
-
-    console.log(userID)
-
-    console.log(routeCoordinates)
-    console.log(typeof routeCoordinates)
-
-    routeCoordinates.toString()
-
-    console.log(routeCoordinates)
+    // Route coordinates in a format that the postgresql database array field will accept:
+    routeCoordinates = (JSON.stringify(routeCoordinates)).replaceAll('[', '{').replaceAll(']', '}');
 
     // Form data about the route that will be posted to the database: 
     const uploadData = new FormData();
     uploadData.append('account', userID);
-    uploadData.append('coordinates', routeCoordinates.toString());
+    uploadData.append('coordinates', routeCoordinates);
     uploadData.append('distance', routeDistance);
     uploadData.append('image', mapImageFileIOS);
 
-    // Posting to database and defining the response: 
+    // Posting the form data to database and defining the response: 
     const response = await fetch(`http://127.0.0.1:8000/route/routes/`, {
       method: 'POST',
       headers: {
@@ -58,7 +49,6 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID) =
       const data = await response.json();
 
       console.log(data)
-
   } catch (err) {
     if (console) console.error(err)
   };

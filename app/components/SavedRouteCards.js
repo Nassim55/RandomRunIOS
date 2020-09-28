@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
 
 // Custom function imports:
-import { setIsRouteCardsShown } from '../../store/actions';
+import { setIsRouteCardsShown, setFinalRouteLineString } from '../../store/actions';
 import deleteSavedRoute from '../functions/deleteSavedRoute';
 import { useHistory } from "react-router-native";
 
@@ -47,9 +47,13 @@ const SavedRouteCards = () => {
                         onSwipeLeft={() => setCurrentIndex(prev => prev + step)}
                         onSwipeRight={() => {
                             setCurrentIndex(prev => prev + step);
-                            console.log(typeof coordinates);
-                            //dispatch(setFinalRouteLineString(coordinates))
-                            //dispatch(setIsRouteCardsShown(false));
+                            const coordinatesDecimal = coordinates.map((coordsSet, index) => (
+                                coordsSet.map(coord => (
+                                    parseFloat(coord)
+                                ))
+                            ))
+                            dispatch(setFinalRouteLineString({ 'type': 'LineString', 'coordinates': coordinatesDecimal }))
+                            dispatch(setIsRouteCardsShown(false));
                         }}
                         onSwipeDown={() => {
                             setCurrentIndex(prev => prev + step);
