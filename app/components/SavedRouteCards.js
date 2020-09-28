@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
 
 // Custom function imports:
-import { setIsRouteCardsShown, setFinalRouteLineString } from '../../store/actions';
+import { setIsRouteCardsShown, setFinalRouteLineString, setMostNorthEasternCoordinates, setMostSouthWesternCoordinates } from '../../store/actions';
 import deleteSavedRoute from '../functions/deleteSavedRoute';
 import { useHistory } from "react-router-native";
 
@@ -39,20 +39,30 @@ const SavedRouteCards = () => {
             onPress={() => dispatch(setIsRouteCardsShown(false))}
             />
             {cards.map(
-                ({ index, distance, image, id, coordinates }) =>
+                ({ index, distance, image, id, coordinates, duration, mostNorthEasternCoordinates, mostSouthWesternCoordinates }) =>
                     currentIndex < index * step + step && (
                         <Card 
                         key={index}
                         position={sub(index * step, aIndex)}
                         onSwipeLeft={() => setCurrentIndex(prev => prev + step)}
+                        distanceMeters={distance}
+                        image={image}
+                        duration={duration}
+                        step={step}
                         onSwipeRight={() => {
                             setCurrentIndex(prev => prev + step);
+                            
+                            // Converting from string cooodinates to floats:
                             const coordinatesDecimal = coordinates.map((coordsSet, index) => (
-                                coordsSet.map(coord => (
-                                    parseFloat(coord)
-                                ))
+                                coordsSet.map(coord => (parseFloat(coord)))
                             ))
+                            const mostNorthEasternCoordinatesDecimal = mostNorthEasternCoordinates.map(element => (parseFloat(element)));
+                            const mostSouthWesternCoordinatesDecimal = mostSouthWesternCoordinates.map(element => (parseFloat(element)));
+
+                            // Updating state:
                             dispatch(setFinalRouteLineString({ 'type': 'LineString', 'coordinates': coordinatesDecimal }))
+                            dispatch(setMostNorthEasternCoordinates(mostNorthEasternCoordinatesDecimal));
+                            dispatch(setMostSouthWesternCoordinates(mostSouthWesternCoordinatesDecimal));
                             dispatch(setIsRouteCardsShown(false));
                         }}
                         onSwipeDown={() => {
@@ -75,9 +85,6 @@ const SavedRouteCards = () => {
                                 { cancelable: false }
                             );
                         }}
-                        distanceMeters={distance}
-                        image={image}
-                        step={step}
                         />
                 )
             )}

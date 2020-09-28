@@ -87,7 +87,7 @@ const Card = (props) => {
                     <Animated.View style={[styles.routeInfo, styles.routeInfoRight, {
                         opacity: cardContentsOpacity,
                     }]}>
-                        <Text style={styles.routeInfoText}>{`${parseFloat(props.distanceMeters).toFixed(0)} meters`}</Text>
+                        <Text style={styles.routeInfoText}>{props.duration}</Text>
                     </Animated.View>
             </Animated.View>
         </PanGestureHandler>
