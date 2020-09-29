@@ -44,12 +44,12 @@ const SavedRouteCards = () => {
                         <Card 
                         key={index}
                         position={sub(index * step, aIndex)}
-                        onSwipeLeft={() => setCurrentIndex(prev => prev + step)}
                         distanceMeters={distance}
                         image={image}
                         duration={duration}
                         step={step}
-                        onSwipeRight={() => {
+                        onSwipe={() => setCurrentIndex(prev => prev + step)}
+                        onPress={() => {
                             setCurrentIndex(prev => prev + step);
                             
                             // Converting from string cooodinates to floats:

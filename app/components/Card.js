@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Text, Image, Alert } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image, Alert, Pressable } from 'react-native';
 import { mix, mixColor, step, usePanGestureHandler } from 'react-native-redash/lib/module/v1';
 import Animated, { add, Extrapolate, interpolate } from 'react-native-reanimated';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
@@ -31,19 +31,12 @@ const Card = (props) => {
     const {gestureHandler, translation, velocity, state} = usePanGestureHandler();
 
     // When the gesture starts again we want to start from the last position instead of resetting:
-    const translateXLeft = useSpring({ 
+    const translateX = useSpring({ 
         value: translation.x,
         velocity: velocity.x,
         state,
-        snapPoints: [-wWidth, 0],
-        onSnap: ([x]) => x !== 0 && props.onSwipeLeft(),
-    });
-    const translateXRight = useSpring({ 
-        value: translation.x,
-        velocity: velocity.x,
-        state,
-        snapPoints: [0, wWidth],
-        onSnap: ([x]) => x !== 0 && props.onSwipeRight(),
+        snapPoints: [-wWidth, 0, wWidth],
+        onSnap: ([x]) => x !== 0 && props.onSwipe(),
     });
     const translateY = add(
         translateYCardOffset,
@@ -64,31 +57,33 @@ const Card = (props) => {
                 backgroundColor,
                 transform: [
                     { scale },
-                    { translateX: translateXLeft },
-                    { translateX: translateXRight },
+                    { translateX },
                     { translateY },
                 ]
             }]} >
-                <View style={[styles.cardViews, styles.routeImageView]}>
-                    <Animated.Image
-                    source={{uri: `http://127.0.0.1:8000${props.image}`}}
-                    style={[styles.routeImage, {
+                <Pressable onPress={props.onPress}>
+                    <View style={[styles.cardViews, styles.routeImageView]}>
+                        <Animated.Image
+                        source={{uri: `http://127.0.0.1:8000${props.image}`}}
+                        style={[styles.routeImage, {
 
-                        opacity: cardContentsOpacity,
-   
-                    }]}
-                    />
-                </View>
-                <Animated.View style={[styles.routeInfo, styles.routeInfoLeft, {
-                        opacity: cardContentsOpacity,
-                    }]}>
-                        <Text style={styles.routeInfoText}>{`${parseFloat(props.distanceMeters).toFixed(0)} meters`}</Text>
-                    </Animated.View>
-                    <Animated.View style={[styles.routeInfo, styles.routeInfoRight, {
-                        opacity: cardContentsOpacity,
-                    }]}>
-                        <Text style={styles.routeInfoText}>{props.duration}</Text>
-                    </Animated.View>
+                            opacity: cardContentsOpacity,
+    
+                        }]}
+                        />
+                    </View>
+
+                    <Animated.View style={[styles.routeInfo, styles.routeInfoLeft, {
+                            opacity: cardContentsOpacity,
+                        }]}>
+                            <Text style={styles.routeInfoText}>{`${parseFloat(props.distanceMeters).toFixed(0)} meters`}</Text>
+                        </Animated.View>
+                        <Animated.View style={[styles.routeInfo, styles.routeInfoRight, {
+                            opacity: cardContentsOpacity,
+                        }]}>
+                            <Text style={styles.routeInfoText}>{props.duration}</Text>
+                        </Animated.View>
+                    </Pressable>
             </Animated.View>
         </PanGestureHandler>
     );

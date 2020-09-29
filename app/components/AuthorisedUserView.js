@@ -5,10 +5,10 @@ import ViewShot from "react-native-view-shot";
 
 // Custom components:
 import MapboxMap from './MapboxMap';
+import SearchRouteForm from './SearchRouteForm';
 import RouteInfoCard from './RouteInfoCard';
 import UserInfoMenu from './UserInfoMenu';
 import SavedRouteCards from './SavedRouteCards';
-import NeuronIcon from './NeuronIcon';
 
 
 const AuthorisedUserView = (props) => {
@@ -44,19 +44,24 @@ const AuthorisedUserView = (props) => {
           originLatitude={originLatitude}
           />
         </ViewShot>
-        <NeuronIcon />
-        <UserInfoMenu />
+        <View style={styles.formAndMenuContainer}>
+          <View style={styles.formContainer}>
+            <SearchRouteForm
+            isLocationPermissionGranted={isLocationPermissionGranted}
+            originLongitude={originLongitude}
+            originLatitude={originLatitude}
+            routeDistanceMeters={routeDistanceMeters}
+            displayRouteDistance={calculatedRouteDistance}
+            viewShotRef={viewShotRef}
+            />
+          </View>
+        </View>
         {
           isRouteCardsShown ?
           <SavedRouteCards />
           :
           <RouteInfoCard 
-          isLocationPermissionGranted={isLocationPermissionGranted}
-          originLongitude={originLongitude}
-          originLatitude={originLatitude}
-          routeDistanceMeters={routeDistanceMeters}
           displayRouteDistance={calculatedRouteDistance}
-          viewShotRef={viewShotRef}
           />
         }
     </View>
@@ -78,7 +83,21 @@ const styles = StyleSheet.create({
   },
   link: {
     position: 'absolute'
-  }
+  },
+  formAndMenuContainer: {
+    position: 'absolute',
+    top: '7.5%',
+    width: '95%',
+    display: 'flex',
+    flexDirection: 'row',
+    paddingLeft: 10,
+
+  },
+  formContainer: {
+    flex: 8
+  },
+  menuContainer: {
+  },
 });
 
 export default AuthorisedUserView;

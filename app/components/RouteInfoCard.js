@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setRouteDistanceMeters } from '../../store/actions';
 
 // Custom functions:
-import fetchRouteCoords from '../functions/fetchRouteCoords';
-import saveRoute from '../functions/saveRoute';
+
+
 
 
 const RouteInfoCard = (props) => {
-    // Creating a dispatch to allow the Redux state to be updated:
-    const dispatch = useDispatch();
-
     // Defining variables from Redux state:
     const finalLineString = useSelector(state => state.finalRouteLineString);
     const userID = useSelector(state => state.userAccountDetails.id);
@@ -26,37 +23,11 @@ const RouteInfoCard = (props) => {
     const date = new Date(0);
     date.setSeconds(props.displayRouteDistance.toFixed(0) / 5);
     const timeString = date.toISOString().substr(11, 8);
-
-
   
 
 
     return (
         <View style={styles.routeDetails}>
-            <View style = {styles.inputAndButtonContainer}>
-                <TextInput
-                style = {styles.inputDistance}
-                placeholder = 'Enter distance in meters...'
-                underlineColorAndroid = {'transparent'}
-                onChangeText = {text => { if (isNaN(text) === false) dispatch(setRouteDistanceMeters(parseFloat(text)))}}
-                />
-                <TouchableOpacity 
-                style = {styles.generateButton}
-                onPress={() => {
-                    fetchRouteCoords( 
-                        props.isLocationPermissionGranted, 
-                        dispatch,
-                        props.originLongitude,
-                        props.originLatitude,
-                        props.routeDistanceMeters,
-                    );
-                }}
-                >   
-                    
-                    <Text style= {styles.generateButtonText}>Calculate Route</Text>
-                    <SimpleLineIcons name='rocket' size={24} color='white'/>
-                </TouchableOpacity>
-            </View>
             {
                 finalLineString.coordinates.length > 0 ?
                     <View style={styles.routeCetailsCardAndSaveContainer}>
@@ -77,24 +48,6 @@ const RouteInfoCard = (props) => {
                                     <Text style={styles.cardSegmentTextBottom}>{timeString}</Text>
                                 </View>
                             </View>
-                            <View style={styles.cardSegmentRight}> 
-                                <Pressable 
-                                onPress={async () => {
-                                    const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(
-                                        props.displayRouteDistance,
-                                        finalLineString.coordinates,
-                                        mapImageURI,
-                                        userID,
-                                        timeString,
-                                        mostNorthEasternCoordinates,
-                                        mostSouthWesternCoordinates
-                                    );
-                                }}
-                                >
-                                    <Text style={styles.cardSegmentTextSave}>Save</Text>
-                                </Pressable>
-                            </View>
                         </View>
                     </View>
                 : 
@@ -107,7 +60,7 @@ const RouteInfoCard = (props) => {
 const styles = StyleSheet.create({
     routeDetails: {
         position: 'absolute',
-        bottom: '8%',
+        bottom: '12%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

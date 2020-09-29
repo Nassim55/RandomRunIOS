@@ -42,6 +42,7 @@ const UserInfoMenu = () => {
                     <SimpleLineIcons name='menu' size={24} />
                 }
             </AnimatedTouchableOpacity>
+            
             <AnimatedView style={fade}>
             <Pressable 
             style={styles.userInfoMenuButton}
@@ -86,33 +87,19 @@ const UserInfoMenu = () => {
 
 const styles = StyleSheet.create({
     userInfoMenu: {
-        position: 'absolute',
-        top: '5%',
-        right: '2.5%',
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
-        zIndex: 999
+        zIndex: 99,
     },
     hamburgerButton: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        opacity: 0.8,
-        margin: 5
+        height: 90,
+        borderWidth: 1
     },
     userInfoMenuButton: {
         display: 'flex',
@@ -124,7 +111,8 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         height: 70,
         width: 70,
-        margin: 5
+        marginTop: 5,
+        marginBottom: 5
     },
     userInfoMenuButtonText: {
         color: 'black'
