@@ -25,6 +25,8 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID, t
       type: 'image/jpg'
     }
 
+    console.log(mapImageFileActual)
+
     // Converting list form data into a format that the postgresql database array field will accept:
     routeCoordinates = (JSON.stringify(routeCoordinates)).replaceAll('[', '{').replaceAll(']', '}');
     mostNorthEasternCoordinates = (JSON.stringify(mostNorthEasternCoordinates)).replaceAll('[', '{').replaceAll(']', '}');
@@ -35,12 +37,10 @@ const saveRoute = async (routeDistance, routeCoordinates, mapImageURI, userID, t
     uploadData.append('account', userID);
     uploadData.append('coordinates', routeCoordinates);
     uploadData.append('distance', routeDistance);
-    uploadData.append('image', mapImageFileIOS);
+    uploadData.append('image', mapImageFileAndroid);
     uploadData.append('duration', timeString);
     uploadData.append('mostNorthEasternCoordinates', mostNorthEasternCoordinates);
     uploadData.append('mostSouthWesternCoordinates', mostSouthWesternCoordinates);
-
-    console.log(uploadData);
 
     // Posting the form data to database and defining the response: 
     const response = await fetch(`http://127.0.0.1:8000/route/routes/`, {

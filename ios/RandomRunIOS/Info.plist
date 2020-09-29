@@ -29,7 +29,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>CFBundleDisplayName</key>
 	<string>RandomRunIOS</string>
 	<key>CFBundleExecutable</key>
