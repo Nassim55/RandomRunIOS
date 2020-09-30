@@ -5,15 +5,21 @@ import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 import { sub } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-native";
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 // Custom components:
 import Card from './Card';
 
 // Custom function imports:
-import { setIsRouteCardsShown, setFinalRouteLineString, setMostNorthEasternCoordinates, setMostSouthWesternCoordinates } from '../../store/actions';
+import { 
+    setIsRouteCardsShown,
+    setFinalRouteLineString,
+    setMostNorthEasternCoordinates,
+    setMostSouthWesternCoordinates,
+    setCalculateRouteDistance
+} from '../../store/actions';
 import deleteSavedRoute from '../functions/deleteSavedRoute';
-import { useHistory } from "react-router-native";
 
 
 
@@ -74,6 +80,7 @@ const SavedRouteCards = () => {
                             dispatch(setMostNorthEasternCoordinates(mostNorthEasternCoordinatesDecimal));
                             dispatch(setMostSouthWesternCoordinates(mostSouthWesternCoordinatesDecimal));
                             dispatch(setIsRouteCardsShown(false));
+                            dispatch(setCalculateRouteDistance(parseFloat(distance)))
                         }}
                         onSwipeDown={() => {
                             setCurrentIndex(prev => prev + step);

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Animated } from 'react-native';
+import { StyleSheet, View, Text, Animated, ImageBackground } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-native";
 import { TextInput, Button } from 'react-native-paper'
@@ -8,6 +8,9 @@ import { TextInput, Button } from 'react-native-paper'
 // Custom functions:
 import registerAccount from '../authentication/registerAccount';
 import userAuthentication from '../authentication/userAuthentication';
+
+// Assets:
+import landingPageBackground from '../../images/landingPageBackground.jpg';
 
 
 const LoginPageView = () => {
@@ -49,12 +52,196 @@ const LoginPageView = () => {
     const [regPassword2, setRegPassword2]= useState('')
 
     return (
-        <View style = {styles.pageContent}>
+        <ImageBackground 
+        style = {styles.pageContent}
+        source={landingPageBackground}
+        >
+            <View style={styles.darkenMap} />
             <View style={styles.welcomeContainer}>
                 <Text style={styles.titleText}>
                     Random Run
                 </Text>
             </View>
+            <View style={styles.cardsContainer}>
+                <View style={[styles.card, styles.cardLogin]}>
+                    <View style={styles.cardTopText}>
+                        <Text style={styles.welcomeTextTop}>Already have an account?</Text>
+                        <Text style={styles.welcomeTextBottom}>Pick up where you left off</Text>
+                    </View>
+                    <View style={styles.forms}>
+                        <TextInput
+                        style={styles.inputForm}
+                        label="Email"
+                        mode={'outlined'}
+                        value={username}
+                        autoCapitalize = 'none'
+                        onChangeText={username => setUsername(username)}
+                        />
+                        <TextInput
+                        style={styles.inputForm}
+                        label="Password"
+                        mode={'outlined'}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={password => setPassword(password)}
+                        />
+                        <Button
+                        style={styles.loginButton}
+                        uppercase={false}
+                        icon='login'
+                        mode="contained"
+                        onPress={() => userAuthentication(username, password, dispatch, history)}
+                        >
+                            Login
+                        </Button>
+                    </View>
+                </View>
+                <View style={[styles.card, styles.cardSignUp]}>
+                    <View style={styles.cardTopText}>
+                        <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
+                        <Text style={styles.welcomeTextBottom}>Start your adventure now</Text>
+                    </View>
+                    <View style={styles.forms}>
+                        <Button
+                        style={styles.loginButton}
+                        uppercase={false}
+                        icon='sign-direction'
+                        mode="outlined"
+                        onPress={toggleHandle}
+                        >
+                            Sign Up
+                        </Button>
+                        <Button
+                        style={styles.loginButton}
+                        uppercase={false}
+                        icon='google'
+                        mode="outlined"
+                        onPress={toggleHandle}
+                        >
+                            Sign Up With Google
+                        </Button>
+                        <Button
+                        style={styles.loginButton}
+                        uppercase={false}
+                        icon='facebook'
+                        mode="outlined"
+                        onPress={toggleHandle}
+                        >
+                            Sign Up With Facebook
+                        </Button>
+                    </View>
+                </View>
+            </View>
+        </ImageBackground>
+    );
+};
+
+const styles = StyleSheet.create({
+    pageContent: {
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+
+    welcomeContainer: {
+        flex: 1,
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '85%',
+
+    },
+    cardsContainer: {
+        flex: 4,
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '85%',
+    },
+
+
+
+    card: {
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 25,
+        borderRadius: 24,
+        backgroundColor: 'white',
+        opacity: 0.7,
+        marginBottom: 50,
+        width: '100%',
+    },
+    cardLogin: {
+        height: '40%',
+    },
+    cardSignUp: {
+        height: '35%'
+    },
+
+
+
+    cardTopText: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    forms: {
+        flex: 4,
+
+    },
+
+
+
+
+    welcomeTextTop: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 24,
+    },
+    welcomeTextBottom: {
+        fontFamily: 'Raleway-Light',
+        fontSize: 16,
+    },
+    inputForm: {
+        marginTop: 10,
+    },
+    inputFormRegistration: {
+        marginTop: 5,
+    },
+    loginButton: {
+        fontFamily: 'Raleway-Regular',
+        marginTop: 15,
+    },
+
+
+    darkenMap: {
+        position: 'absolute',
+        backgroundColor: 'black',
+        opacity: 0.7,
+        height: '100%',
+        width: '100%',
+    },
+
+
+    titleText: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 44,
+        color: 'white',
+    },
+  });
+
+export default LoginPageView;
+
+
+/*
             <Animated.View style={[styles.cardsContainer, {transform: [{ translateY: translateYAnim }]}]}>
                 <View style={styles.cardLogin} >
                     <Text style={styles.welcomeTextTop}>Already have an account?</Text>
@@ -171,134 +358,6 @@ const LoginPageView = () => {
                     </Button>
                 </View>
             </Animated.View>
-        </View>
-    );
-};
-
-const styles = StyleSheet.create({
-    pageContent: {
-        backgroundColor: 'white',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '100%',
-        height: '100%',
-    },
-    titleText: {
-        fontFamily: 'Raleway-Regular',
-        fontSize: 44,
-    },
-    welcomeContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '20%',
-        width: '100%',
-        backgroundColor: 'white',
-        zIndex: 999
-    },
-    cardsContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '80%',
-        width: '100%',
-        overflow: 'hidden',
-    },
-    registerCardContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '80%',
-        width: '100%',
-        overflow: 'hidden',
-    },
-    cardLogin: {
-        position: 'absolute',
-        borderWidth: 2.5,
-        display: 'flex',
-        flexDirection: 'column',
-        width: '85%',
-        borderStyle: 'dashed',
-        borderRadius: 20,
-        borderColor: '#ccc',
-        padding: 20,
-        marginBottom: 15,
-        backgroundColor: 'white'
-    },
-    cardSignUp: {
-        position: 'absolute',
-        bottom: 0,
-        borderWidth: 2.5,
-        display: 'flex',
-        flexDirection: 'column',
-        width: '85%',
-        borderStyle: 'dashed',
-        borderRadius: 20,
-        borderColor: '#ccc',
-        padding: 20,
-        marginBottom: 35,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-    },
-    cardSignUpExtended: {
-        position: 'absolute',
-        borderWidth: 2.5,
-        display: 'flex',
-        flexDirection: 'column',
-        width: '85%',
-        borderStyle: 'dashed',
-        borderRadius: 20,
-        borderColor: '#ccc',
-        padding: 20,
-        marginBottom: 35,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-    },
-    welcomeTextTop: {
-        fontFamily: 'Raleway-Regular',
-        fontSize: 24,
-    },
-    welcomeTextBottom: {
-        fontFamily: 'Raleway-Light',
-        fontSize: 16,
-    },
-    inputForm: {
-        marginTop: 10,
-    },
-    inputFormRegistration: {
-        marginTop: 5,
-    },
-    loginButton: {
-        fontFamily: 'Raleway-Regular',
-        marginTop: 20,
-    }
-  });
-
-export default LoginPageView;
-
-
-/*
-
-    const [isFlipped, setIsFlipped] = useState(false);
-
-    const { translateX, opacity, height1, height2, borderWidth } = useSpring({
-        opacity
-        height1: isFlipped ? '0%' : '50%',
-        height2: isFlipped ? '90%' : '40%',
-        borderWidth: isFlipped ? 0 : 2.5,
-        translateX: isFlipped ? 750 : 0,
-        config: { mass: 12, tension: 500, friction: 80 }
-    });
-
-
-
-                style={[styles.cardLogin, {
-                    height: height1,
-                    transform: [{ translateX: translateX }]
 
 
 
@@ -309,12 +368,15 @@ export default LoginPageView;
 
 
 
+                <View style={[styles.card, styles.cardSignUp]}>
+                    <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
+                    <Text style={styles.welcomeTextBottom}>Start your adventure now</Text>
+
+                </View>
 
 
 
-
-
-*/
+            */
 
 
 
