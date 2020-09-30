@@ -38,6 +38,9 @@ const SavedRouteCards = () => {
             style={styles.darkenMap}
             onPress={() => dispatch(setIsRouteCardsShown(false))}
             />
+            <View style={styles.savedRoutesTitleContainer}>
+                <Text style={styles.savedRoutesText}>Saved Routes</Text>
+            </View>
             {cards.map(
                 ({ index, distance, image, id, coordinates, duration, mostNorthEasternCoordinates, mostSouthWesternCoordinates }) =>
                     currentIndex < index * step + step && (
@@ -105,9 +108,22 @@ const styles = StyleSheet.create({
     darkenMap: {
         position: 'absolute',
         backgroundColor: 'black',
-        opacity: 0.5,
+        opacity: 0.7,
         height: '100%',
         width: '100%',
+    },
+    savedRoutesTitleContainer: {
+        position: 'absolute',
+        top: '9%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    },
+    savedRoutesText: {
+        color: 'white',
+        fontFamily: 'Raleway-Regular',
+        fontSize: 32,
     }
 })
 

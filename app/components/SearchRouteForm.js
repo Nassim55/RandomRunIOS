@@ -67,7 +67,7 @@ const SearchRouteForm = (props) => {
                 </AnimatedPressable>
                 <TextInput
                 style={styles.inputDistance}
-                placeholder = 'Enter distance in meters...'
+                placeholder = 'Distance in meters...'
                 underlineColorAndroid = {'transparent'}
                 onChangeText = {text => { if (isNaN(text) === false) dispatch(setRouteDistanceMeters(parseFloat(text)))}}
                 />
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
+        marginBottom: 15
     },
     inputAndButtonContainer: {
         position: 'relative',
