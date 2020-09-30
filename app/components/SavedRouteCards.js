@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 import { sub } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
 import { useDispatch, useSelector } from 'react-redux';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 // Custom components:
 import Card from './Card';
@@ -40,6 +41,12 @@ const SavedRouteCards = () => {
             />
             <View style={styles.savedRoutesTitleContainer}>
                 <Text style={styles.savedRoutesText}>Saved Routes</Text>
+                <Text style={styles.savedRoutesTextInfo}>Swipe the cards to view your routes</Text>
+                <Text style={styles.savedRoutesTextInfo}>Tap on a card to load a route</Text>
+            </View>
+            <View style={styles.deleteMessageView}>
+                <Text style={styles.savedRoutesTextInfoDelete}>Swipe down to delete a route</Text>
+                <SimpleLineIcons name='trash' size={24} color='white' />
             </View>
             {cards.map(
                 ({ index, distance, image, id, coordinates, duration, mostNorthEasternCoordinates, mostSouthWesternCoordinates }) =>
@@ -91,6 +98,7 @@ const SavedRouteCards = () => {
                         />
                 )
             )}
+
         </View>
     );
 };
@@ -114,16 +122,36 @@ const styles = StyleSheet.create({
     },
     savedRoutesTitleContainer: {
         position: 'absolute',
-        top: '9%',
+        top: '5.5%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
     },
     savedRoutesText: {
+        position: 'relative',
         color: 'white',
         fontFamily: 'Raleway-Regular',
         fontSize: 32,
+    },
+    savedRoutesTextInfo: {
+        color: 'white',
+        fontFamily: 'Raleway-Regular',
+        fontSize: 18,
+    },
+    savedRoutesTextInfoDelete: {
+        color: 'white',
+        fontFamily: 'Raleway-Regular',
+        fontSize: 18,
+        marginBottom: 10
+    },
+    deleteMessageView: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        bottom: '4%',
     }
 })
 

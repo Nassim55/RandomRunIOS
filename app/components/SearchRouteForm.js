@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'white',
-        opacity: 0.85,
+        opacity: 0.9,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,

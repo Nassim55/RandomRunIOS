@@ -20,7 +20,7 @@ const height = width * (425 / 294);
 
 const Card = (props) => {
     const backgroundColor = mixColor(props.position, '#FFFFFF', '#BFC0C0');
-    const translateYCardOffset = mix(props.position, 0 , -125);
+    const translateYCardOffset = mix(props.position, 0 , -115);
     const scale = mix(props.position, 1, 0.85);
     const cardImageOpacity = interpolate(props.position, {
         inputRange: [0, props.step],
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: 'Raleway-Regular',
         fontWeight: '500',
-        color: '#727373',
+        color: '#525454',
     },
 
     linearGradient: {

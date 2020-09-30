@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         flex: 1,
         backgroundColor: 'white',
-        opacity: 0.85,
+        opacity: 0.9,
         margin: 5,
         borderRadius: 15,
         height: 100,
