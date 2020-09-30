@@ -44,25 +44,30 @@ const AuthorisedUserView = (props) => {
           originLatitude={originLatitude}
           />
         </ViewShot>
-        <View style={styles.formAndMenuContainer}>
-          <View style={styles.formContainer}>
-            <SearchRouteForm
-            isLocationPermissionGranted={isLocationPermissionGranted}
-            originLongitude={originLongitude}
-            originLatitude={originLatitude}
-            routeDistanceMeters={routeDistanceMeters}
-            displayRouteDistance={calculatedRouteDistance}
-            viewShotRef={viewShotRef}
-            />
-          </View>
-        </View>
         {
           isRouteCardsShown ?
           <SavedRouteCards />
           :
-          <RouteInfoCard 
-          displayRouteDistance={calculatedRouteDistance}
-          />
+          <View style={styles.uiElementsContainer}>
+            <View style={styles.formAndMenuContainer}>
+              <View style={styles.formContainer}>
+                <SearchRouteForm
+                isLocationPermissionGranted={isLocationPermissionGranted}
+                originLongitude={originLongitude}
+                originLatitude={originLatitude}
+                routeDistanceMeters={routeDistanceMeters}
+                displayRouteDistance={calculatedRouteDistance}
+                />
+              </View>
+              <UserInfoMenu
+              viewShotRef={viewShotRef}
+              displayRouteDistance={calculatedRouteDistance}
+              />
+            </View>
+            <RouteInfoCard 
+            displayRouteDistance={calculatedRouteDistance}
+            />
+          </View>
         }
     </View>
   );
@@ -81,17 +86,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  uiElementsContainer: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   link: {
-    position: 'absolute'
+    position: 'absolute',
   },
   formAndMenuContainer: {
     position: 'absolute',
     top: '7.5%',
     width: '95%',
     display: 'flex',
-    flexDirection: 'row',
-    paddingLeft: 10,
-
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   formContainer: {
     flex: 8

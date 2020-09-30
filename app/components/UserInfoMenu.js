@@ -8,77 +8,96 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import deleteData from '../authentication/deleteData';
 
-import { setIsRouteCardsShown } from '../../store/actions';
+import { setIsRouteCardsShown, setIsUserInfoMenuOpen } from '../../store/actions';
 
 import fetchSavedRoutes from '../functions/fetchSavedRoutes';
+import saveRoute from '../functions/saveRoute';
 
-const UserInfoMenu = () => {
+const UserInfoMenu = (props) => {
     const dispatch = useDispatch();
 
 
-    const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
+    const isUserInfoMenuOpen = useSelector(state => state.isUserInfoMenuOpen);
+    const userID = useSelector(state => state.userAccountDetails.id);
+    const mostNorthEasternCoordinates = useSelector(state => state.mostNorthEasternCoordinates);
+    const mostSouthWesternCoordinates = useSelector(state => state.mostSouthWesternCoordinates);
+
     
     const fade = useSpring({
-        opacity: isNavMenuOpen ? 1 : 0
+        opacity: isUserInfoMenuOpen ? 1 : 0
     })
-    const hamburgerColour = useSpring({
-        backgroundColor: isNavMenuOpen ? '#F24E4E' : 'white'
-    })
+
 
     const AnimatedView = animated(View);
-    const AnimatedTouchableOpacity = animated(TouchableOpacity);
+
+    const finalRouteLineString = useSelector(state => state.finalRouteLineString);
 
 
-    const isRouteCardsShown = useSelector(state => state.isRouteCardsShown);
+    // Creating the route duration for an average running speed of 5 meters per second:
+    const date = new Date(0);
+    date.setSeconds(props.displayRouteDistance.toFixed(0) / 5);
+    const timeString = date.toISOString().substr(11, 8);
+
+
+
+
     
 
     return (
         <View style={styles.userInfoMenu}>
-            <AnimatedTouchableOpacity style={[styles.hamburgerButton, {...hamburgerColour}]} onPress={() => setIsNavMenuOpen(!isNavMenuOpen)}>
-                {
-                    isNavMenuOpen ?
-                    <SimpleLineIcons name='arrow-up' size={24} color='white'/>
-                    :
-                    <SimpleLineIcons name='menu' size={24} />
-                }
-            </AnimatedTouchableOpacity>
-            
-            <AnimatedView style={fade}>
-            <Pressable 
-            style={styles.userInfoMenuButton}
-            onPress={() => {
-                dispatch(setIsRouteCardsShown(false));
-                setIsNavMenuOpen(false)
-            }}
-            >
-                    <SimpleLineIcons name='map' size={24} />
-                    <Text style={styles.userInfoMenuButtonText}>Map</Text>
-                </Pressable>
-                <Pressable 
-                style={styles.userInfoMenuButton}
-                onPress={() => {
-                    dispatch(setIsRouteCardsShown(true));
-                    setIsNavMenuOpen(false)
-                    fetchSavedRoutes(dispatch);
-                }}
-                >
-                    <SimpleLineIcons name='directions' size={24} />
-                    <Text style={styles.userInfoMenuButtonText}>Routes</Text>
-                </Pressable>
-                <Pressable style={styles.userInfoMenuButton}>
-                    <SimpleLineIcons name='user' size={24} />
-                    <Text style={styles.userInfoMenuButtonText}>Profile</Text>
-                </Pressable>
-                <Link 
-                to='/'
-                component={Pressable}
-                style={styles.userInfoMenuButton}
-                onPress={() => deleteData(dispatch)}
-                >                
-                    <SimpleLineIcons name='logout' size={24} />
-                    <Text style={styles.userInfoMenuButtonText}>Logout</Text>
-                </Link>
-            </AnimatedView>
+            { isUserInfoMenuOpen ? 
+                <AnimatedView style={fade}>
+                    {
+                        finalRouteLineString.coordinates.length > 0 ?
+                            <Pressable
+                            style={styles.userInfoMenuButton}
+                            onPress={async () => {
+                                const mapImageURI = await props.viewShotRef.current.capture();
+                                saveRoute(
+                                    props.displayRouteDistance,
+                                    finalRouteLineString.coordinates,
+                                    mapImageURI,
+                                    userID,
+                                    timeString,
+                                    mostNorthEasternCoordinates,
+                                    mostSouthWesternCoordinates
+                                );
+                            }}
+                            >
+                                <SimpleLineIcons name='map' size={24} />
+                                <Text style={styles.userInfoMenuButtonText}>Save</Text>
+                            </Pressable>
+                            :
+                            null
+                    }
+                    <Pressable 
+                    style={styles.userInfoMenuButton}
+                    onPress={() => {
+                        dispatch(setIsRouteCardsShown(true));
+                        dispatch(setIsUserInfoMenuOpen(false));
+                        fetchSavedRoutes(dispatch);
+                    }}
+                    >
+                        <SimpleLineIcons name='directions' size={24} />
+                        <Text style={styles.userInfoMenuButtonText}>Routes</Text>
+                    </Pressable>
+                    <Pressable style={styles.userInfoMenuButton}>
+                        <SimpleLineIcons name='user' size={24} />
+                        <Text style={styles.userInfoMenuButtonText}>Profile</Text>
+                    </Pressable>
+                    <Link 
+                    to='/'
+                    component={Pressable}
+                    style={styles.userInfoMenuButton}
+                    onPress={() => deleteData(dispatch)}
+                    >                
+                        <SimpleLineIcons name='logout' size={24} />
+                        <Text style={styles.userInfoMenuButtonText}>Logout</Text>
+                    </Link>
+                </AnimatedView>
+                :
+                null
+            }
         </View>
     );
 };
@@ -93,13 +112,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         zIndex: 99,
-    },
-    hamburgerButton: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 90,
-        borderWidth: 1
     },
     userInfoMenuButton: {
         display: 'flex',

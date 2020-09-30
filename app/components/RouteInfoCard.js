@@ -60,12 +60,12 @@ const RouteInfoCard = (props) => {
 const styles = StyleSheet.create({
     routeDetails: {
         position: 'absolute',
-        bottom: '12%',
+        bottom: '8.5%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '90%',
+        width: '95%',
     },
     routeCetailsCardAndSaveContainer: {
         width: '100%',

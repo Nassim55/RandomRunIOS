@@ -12,6 +12,7 @@ import {
     SET_SAVED_ROUTES_RESPONSE,
     SET_MAP_IMAGE_URI,
     SET_USER_ACCOUNT_DETAILS,
+    SET_IS_USER_INFO_MENU_OPEN,
 } from './actionTypes';
 
 // We now need to build 'action creators', theses are basically just
@@ -86,3 +87,7 @@ export const setUserAccountDetails = userAccountDetails => ({
     userAccountDetails: userAccountDetails
 })
 
+export const setIsUserInfoMenuOpen = isUserInfoMenuOpen => ({
+    type: SET_IS_USER_INFO_MENU_OPEN,
+    isUserInfoMenuOpen: isUserInfoMenuOpen
+})

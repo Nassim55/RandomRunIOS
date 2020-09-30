@@ -13,6 +13,7 @@ import {
     SET_SAVED_ROUTES_RESPONSE,
     SET_MAP_IMAGE_URI,
     SET_USER_ACCOUNT_DETAILS,
+    SET_IS_USER_INFO_MENU_OPEN,
 } from './actionTypes';
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
     savedRoutesResponse: [],
     mapImageUri: '',
     userAccountDetails: {},
+    isUserInfoMenuOpen: false,
 };
 
 // We now describe how our state will be modified when either addition or subtraction is called:
@@ -102,6 +104,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 userAccountDetails: action.userAccountDetails
+            }
+        case SET_IS_USER_INFO_MENU_OPEN:
+            return {
+                ...state,
+                isUserInfoMenuOpen: action.isUserInfoMenuOpen
             }
         default:
             return state;

@@ -3,10 +3,11 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Pressable } from '
 
 // Library imports:
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { useSpring, animated } from 'react-spring/native';
 
 // Redux state store imports: 
 import { useDispatch, useSelector } from 'react-redux';
-import { setRouteDistanceMeters } from '../../store/actions';
+import { setRouteDistanceMeters, setIsUserInfoMenuOpen } from '../../store/actions';
 
 // Custom functions:
 import fetchRouteCoords from '../functions/fetchRouteCoords';
@@ -30,11 +31,40 @@ const SearchRouteForm = (props) => {
     const date = new Date(0);
     date.setSeconds(props.displayRouteDistance.toFixed(0) / 5);
     const timeString = date.toISOString().substr(11, 8);
-      
+    
+
+
+    const isUserInfoMenuOpen = useSelector(state => state.isUserInfoMenuOpen);
+
+    
+
+    const fade = useSpring({
+        opacity: isUserInfoMenuOpen ? 1 : 0
+    })
+    const hamburgerColour = useSpring({
+        backgroundColor: isUserInfoMenuOpen ? '#F24E4E' : 'white'
+    })
+
+    const AnimatedView = animated(View);
+    const AnimatedPressable = animated(Pressable);
+
+
+    
 
     return (
         <View style={styles.SearchRouteForm}>
             <View style={styles.inputAndButtonContainer}>
+                <AnimatedPressable 
+                style={[styles.hamburger, {...hamburgerColour}]}
+                onPress={() => dispatch(setIsUserInfoMenuOpen(!isUserInfoMenuOpen))}
+                >
+                    {
+                        isUserInfoMenuOpen ?
+                        <SimpleLineIcons name='arrow-up' size={24} color='white'/>
+                        :
+                        <SimpleLineIcons name='menu' size={24} />
+                    }
+                </AnimatedPressable>
                 <TextInput
                 style={styles.inputDistance}
                 placeholder = 'Enter distance in meters...'
@@ -54,36 +84,10 @@ const SearchRouteForm = (props) => {
                 }}
                 >   
                     
-                    <Text style= {styles.generateButtonText}>Calculate</Text>
+                    <Text style= {styles.generateButtonText}>Calculate Route</Text>
                     <SimpleLineIcons name='rocket' size={24} color='white'/>
                 </TouchableOpacity>
-                <View style={styles.hamburger}>
-                    <UserInfoMenu />
-                </View>
             </View>
-            {
-                finalLineString.coordinates.length > 0 ?
-                    <View style={styles.saveButtonContainer}>
-                            <Pressable 
-                                onPress={async () => {
-                                    const mapImageURI = await props.viewShotRef.current.capture();
-                                    saveRoute(
-                                        props.displayRouteDistance,
-                                        finalLineString.coordinates,
-                                        mapImageURI,
-                                        userID,
-                                        timeString,
-                                        mostNorthEasternCoordinates,
-                                        mostSouthWesternCoordinates
-                                    );
-                                }}
-                                >
-                                    <Text style={styles.saveButtonText}>Save this route</Text>
-                                </Pressable>
-                    </View>
-                    :
-                    null
-            }
         </View>
     );
 };
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 90
+        overflow: 'hidden',
     },
     inputAndButtonContainer: {
         position: 'relative',
@@ -116,15 +120,17 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         borderRadius: 10,
+
     },
 
 
     inputDistance: {
+        position: 'relative',
         flex: 4,
         padding: '4%',
-        borderWidth: 1,
     },
     generateButton: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'row',
         flex: 3,
@@ -133,11 +139,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F24E4E',
         elevation: 8,
         padding: '4%',
-        borderWidth: 1,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
     },
     hamburger: {
+        position: 'relative',
         flex: 1,
-        borderWidth: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
     },
 
 
