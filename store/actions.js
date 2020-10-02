@@ -13,6 +13,7 @@ import {
     SET_MAP_IMAGE_URI,
     SET_USER_ACCOUNT_DETAILS,
     SET_IS_USER_INFO_MENU_OPEN,
+    SET_IS_PROFILE_SHOWN,
 } from './actionTypes';
 
 // We now need to build 'action creators', theses are basically just
@@ -91,3 +92,9 @@ export const setIsUserInfoMenuOpen = isUserInfoMenuOpen => ({
     type: SET_IS_USER_INFO_MENU_OPEN,
     isUserInfoMenuOpen: isUserInfoMenuOpen
 })
+
+export const setIsProfileShown = isProfileShown => ({
+    type: SET_IS_PROFILE_SHOWN,
+    isProfileShown: isProfileShown  
+})
+

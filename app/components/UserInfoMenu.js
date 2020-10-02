@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import deleteData from '../authentication/deleteData';
 
-import { setIsRouteCardsShown, setIsUserInfoMenuOpen } from '../../store/actions';
+import { setIsRouteCardsShown, setIsUserInfoMenuOpen, setIsProfileShown } from '../../store/actions';
 
 import fetchSavedRoutes from '../functions/fetchSavedRoutes';
 import saveRoute from '../functions/saveRoute';
@@ -73,15 +73,23 @@ const UserInfoMenu = (props) => {
                     <Pressable 
                     style={styles.userInfoMenuButton}
                     onPress={() => {
-                        dispatch(setIsRouteCardsShown(true));
                         dispatch(setIsUserInfoMenuOpen(false));
+                        dispatch(setIsProfileShown(false));
+                        dispatch(setIsRouteCardsShown(true));
                         fetchSavedRoutes(dispatch);
                     }}
                     >
                         <SimpleLineIcons name='directions' size={24} />
                         <Text style={styles.userInfoMenuButtonText}>Routes</Text>
                     </Pressable>
-                    <Pressable style={styles.userInfoMenuButton}>
+                    <Pressable 
+                    style={styles.userInfoMenuButton}
+                    onPress={() => {
+                        dispatch(setIsUserInfoMenuOpen(false));
+                        dispatch(setIsRouteCardsShown(false));
+                        dispatch(setIsProfileShown(true));
+                    }}
+                    >
                         <SimpleLineIcons name='user' size={24} />
                         <Text style={styles.userInfoMenuButtonText}>Profile</Text>
                     </Pressable>

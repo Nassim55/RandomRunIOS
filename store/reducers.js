@@ -14,6 +14,7 @@ import {
     SET_MAP_IMAGE_URI,
     SET_USER_ACCOUNT_DETAILS,
     SET_IS_USER_INFO_MENU_OPEN,
+    SET_IS_PROFILE_SHOWN,
 } from './actionTypes';
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
     mapImageUri: '',
     userAccountDetails: {},
     isUserInfoMenuOpen: false,
+    isProfileShown: false,
 };
 
 // We now describe how our state will be modified when either addition or subtraction is called:
@@ -109,6 +111,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isUserInfoMenuOpen: action.isUserInfoMenuOpen
+            }
+        case SET_IS_PROFILE_SHOWN:
+            return {
+                ...state,
+                isProfileShown: action.isProfileShown
             }
         default:
             return state;

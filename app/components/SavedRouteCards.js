@@ -40,7 +40,7 @@ const SavedRouteCards = () => {
 
 
     return (
-        <View style={styles.containerSavedRouteCards}>
+        <View style={styles.viewContainer}>
             <Pressable
             style={styles.darkenMap}
             onPress={() => dispatch(setIsRouteCardsShown(false))}
@@ -111,7 +111,7 @@ const SavedRouteCards = () => {
 };
 
 const styles = StyleSheet.create({
-    containerSavedRouteCards: {
+    viewContainer: {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',

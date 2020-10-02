@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
         padding: 25,
         borderRadius: 24,
         backgroundColor: 'white',
-        opacity: 0.8,
+        opacity: 0.85,
         marginBottom: 50,
         width: '100%',
     },

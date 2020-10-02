@@ -9,6 +9,7 @@ import SearchRouteForm from './SearchRouteForm';
 import RouteInfoCard from './RouteInfoCard';
 import UserInfoMenu from './UserInfoMenu';
 import SavedRouteCards from './SavedRouteCards';
+import ProfilePageView from './ProfilePageView';
 
 
 const AuthorisedUserView = (props) => {
@@ -28,7 +29,9 @@ const AuthorisedUserView = (props) => {
 
   // Getting state to determine if UI components should be rendered:
   const isRouteCardsShown = useSelector(state => state.isRouteCardsShown);
+  const isProfileShown = useSelector(state => state.isProfileShown)
 
+  console.log(isProfileShown)
 
 
 
