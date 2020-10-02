@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Animated, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-native";
 import { TextInput, Button } from 'react-native-paper'
 
+import Animated, { interpolate } from 'react-native-reanimated';
+import { useTransition } from  "react-native-redash/lib/module/v1";
 
 // Custom functions:
 import registerAccount from '../authentication/registerAccount';
@@ -11,6 +13,8 @@ import userAuthentication from '../authentication/userAuthentication';
 
 // Assets:
 import landingPageBackground from '../../images/landingPageBackground.jpg';
+
+const width = Dimensions.get('window').width;
 
 
 const LoginPageView = () => {
@@ -29,18 +33,15 @@ const LoginPageView = () => {
 
 
     const [isSignUp, setIsSignUp] = useState(false);
-    
-    const [translateYAnim] = useState(new Animated.Value(0))
-
-    // Change this to interpolate from 0% to 100%
-    const toggleHandle = () => {
-        setIsSignUp(!isSignUp);
-        Animated.spring(translateYAnim, {
-            toValue: isSignUp ? -855 : 0,
-            duration: 7000,
-            useNativeDriver: true,
-        }).start();
-    }
+    const transition = useTransition(isSignUp, { duration: 400 })
+    const translateXLogin = interpolate(transition, {
+        inputRange: [0, 1],
+        outputRange: [0, -width],
+    })
+    const translateXSignUp = interpolate(transition, {
+        inputRange: [0, 1],
+        outputRange: [width, 0],
+    })
     
 
     // State values for registration:
@@ -63,7 +64,9 @@ const LoginPageView = () => {
                 </Text>
             </View>
             <View style={styles.cardsContainer}>
-                <View style={[styles.card, styles.cardLogin]}>
+                <Animated.View style={[styles.card, styles.cardLogin, {
+                    transform: [{translateX: translateXLogin}]
+                }]}>
                     <View style={styles.cardTopText}>
                         <Text style={styles.welcomeTextTop}>Already have an account?</Text>
                         <Text style={styles.welcomeTextBottom}>Pick up where you left off</Text>
@@ -95,8 +98,10 @@ const LoginPageView = () => {
                             Login
                         </Button>
                     </View>
-                </View>
-                <View style={[styles.card, styles.cardSignUp]}>
+                </Animated.View>
+                <Animated.View style={[styles.card, styles.cardSignUp, {
+                    transform: [{translateX: translateXLogin}]
+                }]}>
                     <View style={styles.cardTopText}>
                         <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
                         <Text style={styles.welcomeTextBottom}>Start your adventure now</Text>
@@ -107,7 +112,7 @@ const LoginPageView = () => {
                         uppercase={false}
                         icon='sign-direction'
                         mode="outlined"
-                        onPress={toggleHandle}
+                        onPress={() => setIsSignUp(!isSignUp)}
                         >
                             Sign Up
                         </Button>
@@ -116,7 +121,6 @@ const LoginPageView = () => {
                         uppercase={false}
                         icon='google'
                         mode="outlined"
-                        onPress={toggleHandle}
                         >
                             Sign Up With Google
                         </Button>
@@ -125,12 +129,74 @@ const LoginPageView = () => {
                         uppercase={false}
                         icon='facebook'
                         mode="outlined"
-                        onPress={toggleHandle}
                         >
                             Sign Up With Facebook
                         </Button>
                     </View>
-                </View>
+                </Animated.View>
+                <Animated.View style={[styles.card, styles.cardSignUpDetails, {
+                    transform: [{translateX: translateXSignUp}]
+                }]}>
+                    <View style={styles.cardTopText}>
+                        <Text style={styles.welcomeTextTop} onPress={() => setIsSignUp(!isSignUp)}>Create an account</Text>
+                        <Text style={styles.welcomeTextBottom}>Enter your details</Text>
+                    </View>
+                    <View style={styles.forms}>
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="Create a Username"
+                        mode={'outlined'}
+                        value={regUsername}
+                        onChangeText={username => setRegUsername(username)}
+                        />
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="First Name"
+                        mode={'outlined'}
+                        value={regFirstName}
+                        onChangeText={firstName => setRegFirstName(firstName)}
+                        />
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="Last Name"
+                        mode={'outlined'}
+                        value={regLastName}
+                        onChangeText={lastName => setRegLastName(lastName)}
+                        />
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="Email"
+                        mode={'outlined'}
+                        value={regEmail}
+                        onChangeText={email => setRegEmail(email)}
+                        />
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="Password"
+                        mode={'outlined'}
+                        secureTextEntry={true}
+                        value={regPassword}
+                        onChangeText={password => setRegPassword(password)}
+                        />
+                        <TextInput
+                        style={styles.inputFormRegistration}
+                        label="Confirm Password"
+                        mode={'outlined'}
+                        secureTextEntry={true}
+                        value={regPassword2}
+                        onChangeText={password2 => setRegPassword2(password2)}
+                        />
+                        <Button
+                        style={styles.loginButton}
+                        uppercase={false}
+                        icon='sign-direction'
+                        mode="contained"
+                        onPress={() => registerAccount(regFirstName, regLastName, regUsername, regEmail, regPassword, regPassword2,  dispatch, history)}
+                        >
+                            Register
+                        </Button>
+                    </View>
+                </Animated.View>
             </View>
         </ImageBackground>
     );
@@ -174,7 +240,7 @@ const styles = StyleSheet.create({
         padding: 25,
         borderRadius: 24,
         backgroundColor: 'white',
-        opacity: 0.7,
+        opacity: 0.8,
         marginBottom: 50,
         width: '100%',
     },
@@ -183,6 +249,9 @@ const styles = StyleSheet.create({
     },
     cardSignUp: {
         height: '35%'
+    },
+    cardSignUpDetails: {
+        position: 'absolute'
     },
 
 
@@ -239,145 +308,3 @@ const styles = StyleSheet.create({
   });
 
 export default LoginPageView;
-
-
-/*
-            <Animated.View style={[styles.cardsContainer, {transform: [{ translateY: translateYAnim }]}]}>
-                <View style={styles.cardLogin} >
-                    <Text style={styles.welcomeTextTop}>Already have an account?</Text>
-                    <Text style={styles.welcomeTextBottom}>Pick up where you left off</Text>
-                    <TextInput
-                    style={styles.inputForm}
-                    label="Email"
-                    mode={'outlined'}
-                    value={username}
-                    autoCapitalize = 'none'
-                    onChangeText={username => setUsername(username)}
-                    />
-                    <TextInput
-                    style={styles.inputForm}
-                    label="Password"
-                    mode={'outlined'}
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={password => setPassword(password)}
-                    />
-                    <Button
-                    style={styles.loginButton}
-                    uppercase={false}
-                    icon='login'
-                    mode="contained"
-                    onPress={() => userAuthentication(username, password, dispatch, history)}
-                    >
-                        Login
-                    </Button>
-                </View>
-                <View style={styles.cardSignUp}>
-                    <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
-                    <Text style={styles.welcomeTextBottom}>Start your adventure now</Text>
-                    <Button
-                    style={styles.loginButton}
-                    uppercase={false}
-                    icon='sign-direction'
-                    mode="outlined"
-                    onPress={toggleHandle}
-                    >
-                        Sign Up
-                    </Button>
-                    <Button
-                    style={styles.loginButton}
-                    uppercase={false}
-                    icon='google'
-                    mode="outlined"
-                    onPress={toggleHandle}
-                    >
-                        Sign Up With Google
-                    </Button>
-                </View>
-            </Animated.View>
-            <Animated.View style={[styles.registerCardContainer, {transform: [{ translateY: translateYAnim }]}]}>
-                <View style={styles.cardSignUp}>
-                    <Text 
-                    style={styles.welcomeTextTop}
-                    onPress={toggleHandle}
-                    >
-                        Create your account
-                    </Text>
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="First Name"
-                    mode={'outlined'}
-                    value={regFirstName}
-                    onChangeText={firstName => setRegFirstName(firstName)}
-                    />
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="Last Name"
-                    mode={'outlined'}
-                    value={regLastName}
-                    onChangeText={lastName => setRegLastName(lastName)}
-                    />
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="Username"
-                    mode={'outlined'}
-                    value={regUsername}
-                    onChangeText={username => setRegUsername(username)}
-                    />
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="Email"
-                    mode={'outlined'}
-                    value={regEmail}
-                    onChangeText={email => setRegEmail(email)}
-                    />
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="Password"
-                    mode={'outlined'}
-                    secureTextEntry={true}
-                    value={regPassword}
-                    onChangeText={password => setRegPassword(password)}
-                    />
-                    <TextInput
-                    style={styles.inputFormRegistration}
-                    label="Password2"
-                    mode={'outlined'}
-                    secureTextEntry={true}
-                    value={regPassword2}
-                    onChangeText={password2 => setRegPassword2(password2)}
-                    />
-                    <Button
-                    style={styles.loginButton}
-                    uppercase={false}
-                    icon='sign-direction'
-                    mode="contained"
-                    onPress={() => registerAccount(regFirstName, regLastName, regUsername, regEmail, regPassword, regPassword2,  dispatch, history)}
-                    >
-                        Register
-                    </Button>
-                </View>
-            </Animated.View>
-
-
-
-
-
-
-
-
-
-
-                <View style={[styles.card, styles.cardSignUp]}>
-                    <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
-                    <Text style={styles.welcomeTextBottom}>Start your adventure now</Text>
-
-                </View>
-
-
-
-            */
-
-
-
-
