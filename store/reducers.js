@@ -15,6 +15,7 @@ import {
     SET_USER_ACCOUNT_DETAILS,
     SET_IS_USER_INFO_MENU_OPEN,
     SET_IS_PROFILE_SHOWN,
+    SET_IS_MAP_SHOWN,
 } from './actionTypes';
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
     userAccountDetails: {},
     isUserInfoMenuOpen: false,
     isProfileShown: false,
+    isMapShown: true,
 };
 
 // We now describe how our state will be modified when either addition or subtraction is called:
@@ -116,6 +118,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isProfileShown: action.isProfileShown
+            }
+        case SET_IS_MAP_SHOWN:
+            return {
+                ...state,
+                isMapShown: action.isMapShown
             }
         default:
             return state;

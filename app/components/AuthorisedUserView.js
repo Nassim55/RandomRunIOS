@@ -28,12 +28,9 @@ const AuthorisedUserView = (props) => {
   const calculatedRouteDistance = useSelector(state => state.calculatedRouteDistance);
 
   // Getting state to determine if UI components should be rendered:
+  const isMapShown = useSelector(state => state.isMapShown)
   const isRouteCardsShown = useSelector(state => state.isRouteCardsShown);
   const isProfileShown = useSelector(state => state.isProfileShown)
-
-  console.log(isProfileShown)
-
-
 
   return (
     <View style = {styles.pageContent}>
@@ -47,11 +44,10 @@ const AuthorisedUserView = (props) => {
           originLatitude={originLatitude}
           />
         </ViewShot>
-
+        { isProfileShown ? <ProfilePageView /> : null }
+        { isRouteCardsShown ? <SavedRouteCards /> : null }
         {
-          isRouteCardsShown ?
-          <SavedRouteCards />
-          :
+          isMapShown ?
           <View style={styles.uiElementsContainer}>
             <View style={styles.formAndMenuContainer}>
               <View style={styles.formContainer}>
@@ -72,8 +68,9 @@ const AuthorisedUserView = (props) => {
             displayRouteDistance={calculatedRouteDistance}
             />
           </View>
-        }
-        
+          :
+          null
+        }    
     </View>
   );
 };

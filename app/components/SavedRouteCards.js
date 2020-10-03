@@ -17,9 +17,11 @@ import {
     setFinalRouteLineString,
     setMostNorthEasternCoordinates,
     setMostSouthWesternCoordinates,
-    setCalculateRouteDistance
+    setCalculateRouteDistance,
+    setIsMapShown
 } from '../../store/actions';
 import deleteSavedRoute from '../functions/deleteSavedRoute';
+
 
 
 
@@ -43,7 +45,10 @@ const SavedRouteCards = () => {
         <View style={styles.viewContainer}>
             <Pressable
             style={styles.darkenMap}
-            onPress={() => dispatch(setIsRouteCardsShown(false))}
+            onPress={() => {
+                dispatch(setIsRouteCardsShown(false));
+                dispatch(setIsMapShown(true));
+            }}
             />
             <View style={styles.savedRoutesTitleContainer}>
                 <Text style={styles.savedRoutesText}>Saved Routes</Text>

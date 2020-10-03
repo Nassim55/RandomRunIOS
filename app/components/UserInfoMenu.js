@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import deleteData from '../authentication/deleteData';
 
-import { setIsRouteCardsShown, setIsUserInfoMenuOpen, setIsProfileShown } from '../../store/actions';
+import { setIsRouteCardsShown, setIsUserInfoMenuOpen, setIsProfileShown, setIsMapShown } from '../../store/actions';
 
 import fetchSavedRoutes from '../functions/fetchSavedRoutes';
 import saveRoute from '../functions/saveRoute';
@@ -73,6 +73,7 @@ const UserInfoMenu = (props) => {
                     <Pressable 
                     style={styles.userInfoMenuButton}
                     onPress={() => {
+                        dispatch(setIsMapShown(false));
                         dispatch(setIsUserInfoMenuOpen(false));
                         dispatch(setIsProfileShown(false));
                         dispatch(setIsRouteCardsShown(true));
@@ -85,6 +86,7 @@ const UserInfoMenu = (props) => {
                     <Pressable 
                     style={styles.userInfoMenuButton}
                     onPress={() => {
+                        dispatch(setIsMapShown(false));
                         dispatch(setIsUserInfoMenuOpen(false));
                         dispatch(setIsRouteCardsShown(false));
                         dispatch(setIsProfileShown(true));

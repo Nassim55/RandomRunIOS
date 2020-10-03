@@ -9,6 +9,8 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import deleteSavedRoute from '../functions/deleteSavedRoute';
 
+
+
 const { width: wWidth } = Dimensions.get('window');
 const { height: wHeight } = Dimensions.get('window');
 const width = wWidth * 0.75;

@@ -1,73 +1,50 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
+
+import { useDispatch } from 'react-redux';
+import { setIsProfileShown, setIsMapShown } from '../../store/actions';
+
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
+
+
 
 const ProfilePageView = (props) => {
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.viewContainer}>
             <Pressable
             style={styles.darkenMap}
-            onPress={() => dispatch(setIsRouteCardsShown(false))}
+            onPress={() => {
+                dispatch(setIsProfileShown(false));
+                dispatch(setIsMapShown(true));
+            }}
             />
-            <View style={styles.savedRoutesTitleContainer}>
-                <Text style={styles.savedRoutesText}>Saved Routes</Text>
-                <Text style={styles.savedRoutesTextInfo}>Swipe the cards to view your routes</Text>
-                <Text style={styles.savedRoutesTextInfo}>Tap on a card to load a route</Text>
-            </View>
-            <View style={styles.deleteMessageView}>
-                <Text style={styles.savedRoutesTextInfoDelete}>Swipe down to delete a route</Text>
-                <SimpleLineIcons name='trash' size={24} color='white' />
-            </View>
-            {cards.map(
-                ({ index, distance, image, id, coordinates, duration, mostNorthEasternCoordinates, mostSouthWesternCoordinates }) =>
-                    currentIndex < index * step + step && (
-                        <Card 
-                        key={index}
-                        position={sub(index * step, aIndex)}
-                        distanceMeters={distance}
-                        image={image}
-                        duration={duration}
-                        step={step}
-                        onSwipe={() => setCurrentIndex(prev => prev + step)}
-                        onPress={() => {
-                            setCurrentIndex(prev => prev + step);
-                            
-                            // Converting from string cooodinates to floats:
-                            const coordinatesDecimal = coordinates.map((coordsSet, index) => (
-                                coordsSet.map(coord => (parseFloat(coord)))
-                            ))
-                            const mostNorthEasternCoordinatesDecimal = mostNorthEasternCoordinates.map(element => (parseFloat(element)));
-                            const mostSouthWesternCoordinatesDecimal = mostSouthWesternCoordinates.map(element => (parseFloat(element)));
+                <View style={styles.savedRoutesTitleContainer}>
+                    <Text style={styles.savedRoutesText}>Profile</Text>
+                    <Text style={styles.savedRoutesTextInfo}>View and edit your profile information</Text>
+                </View>
+                <View style={styles.card}>
+                    <View style={[styles.cardInnerViews, styles.settingsIconView]}>
+                        <Pressable                    >
+                            <SimpleLineIcons name='settings' size={24} />
+                        </Pressable>
+                    </View>
+                    <View style={[styles.cardInnerViews, styles.profileInfoView]}>
+                        <View style={styles.profileImageView}>
+                            <Image
+                            source={{ uri: '/Users/nassim/Documents/RandomRunIOS/images/landingPageBackground.jpg' }}
+                            style={styles.profileImage}
+                            />
+                        </View>
+                        <View style={styles.usernameView}>
+                            <Text style={styles.username}>nassim</Text>
+                            <Text style={styles.dateJoined}>Joined September 2020</Text>
+                        </View>
+                    </View>
 
-                            // Updating state:
-                            dispatch(setFinalRouteLineString({ 'type': 'LineString', 'coordinates': coordinatesDecimal }))
-                            dispatch(setMostNorthEasternCoordinates(mostNorthEasternCoordinatesDecimal));
-                            dispatch(setMostSouthWesternCoordinates(mostSouthWesternCoordinatesDecimal));
-                            dispatch(setIsRouteCardsShown(false));
-                            dispatch(setCalculateRouteDistance(parseFloat(distance)))
-                        }}
-                        onSwipeDown={() => {
-                            setCurrentIndex(prev => prev + step);
-                            Alert.alert(
-                                'Delete this route?',
-                                'Are you sure you want to permanently delete this route?',
-                                [
-                                    { 
-                                        text: 'Keep',
-                                        style: 'cancel',
-                                        onPress: () => setCurrentIndex(prev => prev - step),
-                                    },
-                                    { 
-                                        text: 'Delete',
-                                        style: 'destructive',
-                                        onPress: () => deleteSavedRoute(id),
-                                    }
-                                ],
-                                { cancelable: false }
-                            );
-                        }}
-                        />
-                )
-            )}
+                </View>
         </View>
     );
 };
@@ -83,6 +60,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
     },
+
     darkenMap: {
         position: 'absolute',
         backgroundColor: 'black',
@@ -90,6 +68,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
     },
+
     savedRoutesTitleContainer: {
         position: 'absolute',
         top: '5.5%',
@@ -109,20 +88,76 @@ const styles = StyleSheet.create({
         fontFamily: 'Raleway-Regular',
         fontSize: 18,
     },
-    savedRoutesTextInfoDelete: {
-        color: 'white',
-        fontFamily: 'Raleway-Regular',
-        fontSize: 18,
-        marginBottom: 10
-    },
-    deleteMessageView: {
+
+    card: {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        bottom: '4%',
-    }
+        height: '60%',
+        width: '75%',
+        backgroundColor: 'white',
+        borderRadius: 24,
+    },
+
+    cardInnerViews: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    settingsIconView: {
+        flex: 1,
+        borderTopRightRadius: 24,
+        borderTopLeftRadius: 24,
+        alignItems: 'flex-end',
+    },
+    profileInfoView: {
+        flex: 8,
+        alignItems: 'center', 
+        borderBottomLeftRadius: 24,
+        borderBottomRightRadius: 24
+    },
+
+
+
+    profileImageView: {
+        flex: 3,
+        width: '100%',
+
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    usernameView: {
+        flex: 1,
+        width: '100%',
+
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    username: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 24
+    },
+    dateJoined: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 16
+    },
+
+    profileImage: {
+        height: 220,
+        width: 220,
+        borderRadius: 110,
+    },
+
 })
 
 
