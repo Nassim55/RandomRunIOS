@@ -86,6 +86,7 @@ const SavedRouteCards = () => {
                             dispatch(setMostSouthWesternCoordinates(mostSouthWesternCoordinatesDecimal));
                             dispatch(setIsRouteCardsShown(false));
                             dispatch(setCalculateRouteDistance(parseFloat(distance)))
+                            dispatch(setIsMapShown(true));
                         }}
                         onSwipeDown={() => {
                             setCurrentIndex(prev => prev + step);
