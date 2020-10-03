@@ -6,6 +6,7 @@ import { TextInput, Button } from 'react-native-paper'
 
 import Animated, { interpolate } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 // Custom functions:
 import registerAccount from '../authentication/registerAccount';
@@ -132,6 +133,23 @@ const LoginPageView = () => {
                         >
                             Sign Up With Facebook
                         </Button>
+                        <LoginButton
+                        onLoginFinished={
+                            (error, result) => {
+                            if (error) {
+                                console.log("login has error: " + result.error);
+                            } else if (result.isCancelled) {
+                                console.log("login is cancelled.");
+                            } else {
+                                AccessToken.getCurrentAccessToken().then(
+                                (data) => {
+                                    console.log(data.accessToken.toString())
+                                }
+                                )
+                            }
+                            }
+                        }
+                        onLogoutFinished={() => console.log("logout.")}/>
                     </View>
                 </Animated.View>
                 <Animated.View style={[styles.card, styles.cardSignUpDetails, {

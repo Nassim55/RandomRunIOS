@@ -47,6 +47,7 @@ const AuthorisedUserView = (props) => {
           originLatitude={originLatitude}
           />
         </ViewShot>
+
         {
           isRouteCardsShown ?
           <SavedRouteCards />
@@ -72,6 +73,7 @@ const AuthorisedUserView = (props) => {
             />
           </View>
         }
+        
     </View>
   );
 };
