@@ -5,12 +5,18 @@ import { useDispatch } from 'react-redux';
 import { setIsProfileShown, setIsMapShown } from '../../store/actions';
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import ImagePicker from 'react-native-image-picker';
 
 
 
 
 const ProfilePageView = (props) => {
     const dispatch = useDispatch();
+
+    const options = {
+        title: 'Select a Profile Picture',
+        storageOptions: { skipBackup: true, path: 'images' },
+    };
 
     return (
         <View style={styles.viewContainer}>
@@ -23,7 +29,8 @@ const ProfilePageView = (props) => {
             />
                 <View style={styles.savedRoutesTitleContainer}>
                     <Text style={styles.savedRoutesText}>Profile</Text>
-                    <Text style={styles.savedRoutesTextInfo}>View and edit your profile information</Text>
+                    <Text style={styles.savedRoutesTextInfo}>View your profile information</Text>
+                    <Text style={styles.savedRoutesTextInfo}>Tap on the cog to edit your profile</Text>
                 </View>
                 <View style={styles.card}>
                     <View style={[styles.cardInnerViews, styles.settingsIconView]}>
@@ -32,12 +39,27 @@ const ProfilePageView = (props) => {
                         </Pressable>
                     </View>
                     <View style={[styles.cardInnerViews, styles.profileInfoView]}>
-                        <View style={styles.profileImageView}>
+                        <Pressable 
+                        style={styles.profileImageView}
+                        onPress={() => {
+                            ImagePicker.showImagePicker(options, (response) => {                              
+                                if (response.didCancel) {
+                                    console.log('User cancelled image picker');
+                                } else if (response.error) {
+                                    console.log('ImagePicker Error: ', response.error);
+                                } else {
+                                    const source = { uri: response.uri };
+                                    console.log(source);
+                                    // Would then update state to reflect the image added...
+                                }
+                            });
+                        }}
+                        >
                             <Image
                             source={{ uri: '/Users/nassim/Documents/RandomRunIOS/images/landingPageBackground.jpg' }}
                             style={styles.profileImage}
                             />
-                        </View>
+                        </Pressable>
                         <View style={styles.usernameView}>
                             <Text style={styles.username}>nassim</Text>
                             <Text style={styles.dateJoined}>Joined September 2020</Text>
@@ -136,7 +158,6 @@ const styles = StyleSheet.create({
     usernameView: {
         flex: 1,
         width: '100%',
-
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

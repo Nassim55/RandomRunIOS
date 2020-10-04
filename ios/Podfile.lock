@@ -290,6 +290,8 @@ PODS:
     - React
   - react-native-geolocation (2.0.2):
     - React
+  - react-native-image-picker (2.3.4):
+    - React-Core
   - react-native-mapbox-gl (8.1.0-rc.4):
     - "@react-native-mapbox-gl-mapbox-static (~> 5.8)"
     - Mapbox-iOS-SDK (~> 5.8)
@@ -424,6 +426,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
@@ -503,6 +506,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fbsdk"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
   react-native-sensitive-info:
@@ -551,8 +556,8 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  FBLazyVector: b75379a15a155cc24396c8c389e8b9b7d80709b3
-  FBReactNativeSpec: 1112ae713ea6dd2b6f212ee4277a15f96e86e9b7
+  FBLazyVector: 86626612edfd7641f1fb660bf490d2a71e671a39
+  FBReactNativeSpec: 2611a74991401b949c82fa20bc40d40be2de8347
   FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
   FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
   FBSDKShareKit: 00a055c1999b099596e00212dd1c0600c6697019
@@ -568,38 +573,39 @@ SPEC CHECKSUMS:
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   RCT-Folly: b39288cedafe50da43317ec7d91bcc8cc0abbf33
-  RCTRequired: db0345f3b15749dae2c3f8419e8dc718d3b51f11
-  RCTTypeSafety: 80cea248492698e7ebe706d5dbec1d8ac298f787
-  React: 23724fc0f7253fae87bcf89d2e88b6a2570a9949
-  React-callinvoker: 8260593bc0c9c4db76c3612fe81d683bc0aa5d6e
-  React-Core: 4930f355fdac4c3c7ba304521c1fa1662ab84806
-  React-CoreModules: a0d5ad9adcca51ebe1431ecf47898f34ede86616
-  React-cxxreact: 2ddd9b98cf3a7851515e5b4b60a58702e6ecfbec
-  React-jsi: 4a5d5424a6767cb6acddfec3d9092756b98bf197
-  React-jsiexecutor: 9867f84fd8bd5ff5aa6298b2d2cd2a69e04ae0a8
-  React-jsinspector: f88105ebc8d55f38e5d1d9ba380134d1eac0ff7c
+  RCTRequired: e6e6900f3a45df0882d427da018304530221cab2
+  RCTTypeSafety: e6899771a91b014a104f0248269b2f230f2f8b10
+  React: 57adfcc881c9aca28b9bc70dd2adc51e585d1759
+  React-callinvoker: 884755b8a492ff1589ea983335475a04e3ffb1ca
+  React-Core: 454a56313c274cc4bbef9aaf6f6ab4ded8035124
+  React-CoreModules: b59e2e36d9adc4a0017611b5be021986d739c854
+  React-cxxreact: 12c27bc6a06d56f10d0b3065fc293a82411b7fc8
+  React-jsi: ec2f9a7b180c14318bf1ae6920e8711bffd090f7
+  React-jsiexecutor: 48f77d47c0a6955057e53d8c36e815e12447f527
+  React-jsinspector: 9b35a92dea0c0acba8639d4b296c44d25aef4d40
   react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
+  react-native-image-picker: 32d1ad2c0024ca36161ae0d5c2117e2d6c441f11
   react-native-mapbox-gl: b2e4cee6a40cb713cd72846c9573cd5bc468c3d5
   react-native-sensitive-info: 50a0db17f996d019fd421793c1aa05c2b6be13de
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
-  React-perflogger: 55a17ad9721dc075e27782d7fba0cdfb392453ee
-  React-RCTActionSheet: 84fcf17db8d0088c048a2fc4a313086433e41980
-  React-RCTAnimation: 4017988b5b934efe3bd1951d456b2070847b37d6
-  React-RCTBlob: 145f1d19adc7486c5b861abc34c4b7d05fce183f
-  React-RCTImage: 9d813cc3fe93145deb4159a77f46a255fa370f22
-  React-RCTLinking: bbe2a477bc8e3110610f1a41437e92bbeaf95f3d
-  React-RCTNetwork: 5e177b0d62a4820d309fd9a16d12f21be1370914
-  React-RCTSettings: 8d2eedaf4667da4b43a2464175374377caa9f23c
-  React-RCTText: 1aaa3ebd7c81d57bdca095d579d2ec63614d8955
-  React-RCTVibration: 03dd5d766a065a18c7823d7d11232f3050c7dd9f
-  React-runtimeexecutor: 6f4be3cb90f603499040a1fc75f126b86c4f5406
-  ReactCommon: 1cee7abd57d092e934694b232e67e669cb6c0acb
+  React-perflogger: 324fb3dab537e0aae6ba5ac983a0cc1aacb8e501
+  React-RCTActionSheet: 74740ae5c59b45fce196379647a0b5fb4f5f2a73
+  React-RCTAnimation: 36c9bd30c6dbcb5f01a79be716798ccfd91f6d7c
+  React-RCTBlob: b38f629140a874aafd97adecd8f0dd5621c4b006
+  React-RCTImage: dcf4fe79b662682dff48bd81df0298ebc5da6420
+  React-RCTLinking: e04ed625a6b498e6d786f68896e8f692e5aa845a
+  React-RCTNetwork: 585b73b8380b9ceded0691669b134c9183321d07
+  React-RCTSettings: ae079042d9c63eb849e5f59b5981f0eda3bbb38b
+  React-RCTText: 206ec90607f450664437b3753257347eda9a59f8
+  React-RCTVibration: 030275c44dec05a6c2ce4738b1484b28f93ba624
+  React-runtimeexecutor: f42b83bb75a93d0a2dd10b5d60d1e0be9f77a495
+  ReactCommon: 3c6685615de8180b2c899dc6ac91e84a94de4d47
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  Yoga: 7a4c7d3ae1194ace52d5a9072c5868f1bb62f3b8
+  Yoga: 43477cf9038f4251d3dc2a0e7e79e4e6aa78b183
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: fe457fd82c61a9e2874554a762612865a06c52ec
