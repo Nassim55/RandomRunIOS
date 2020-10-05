@@ -1,5 +1,5 @@
 import saveData from '../authentication/saveData';
-import { setUserAuthenticated, setUserAccountDetails } from '../../store/actions';
+import { setUserAuthenticated, setUserAccountDetails, setLoginButtonHttpResponse } from '../../store/actions';
 
 import pushUserToMapView from '../functions/pushUserToMapView';
 
@@ -22,6 +22,18 @@ const userAuthentication = async (username, password, dispatch, history) => {
             // Pushing to the map view on successfull login:
             pushUserToMapView(dispatch, history);
         } else {
+            // Updating state with the response from the server:
+            if (data.username && data.password) {
+                dispatch(setLoginButtonHttpResponse({'password': data.password, 'username': data.username, 'non_field_errors': ['']}))
+            } else if (data.username && !data.password) {
+                dispatch(setLoginButtonHttpResponse({'password': [''], 'username': data.username, 'non_field_errors': ['']}))
+            } else if (!data.username && data.password) {
+                dispatch(setLoginButtonHttpResponse({'password': data.password, 'username': [''], 'non_field_errors': ['']}))
+            } else if (data.non_field_errors) {
+                dispatch(setLoginButtonHttpResponse({'password': [''], 'username': [''], 'non_field_errors': data.non_field_errors}))
+            }
+
+            // Keeping the user at the home page:
             history.push('/');
         }
     } catch (err) { if (console) console.error(err) }

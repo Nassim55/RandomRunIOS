@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-native";
 import { TextInput, Button } from 'react-native-paper'
 
@@ -19,8 +19,6 @@ const width = Dimensions.get('window').width;
 
 
 const LoginPageView = () => {
-    console.log('LoginPageView Rendering')
-
     // Creating dispatch to all updates to redux store:
     const dispatch = useDispatch();
 
@@ -53,6 +51,12 @@ const LoginPageView = () => {
     const [regPassword, setRegPassword] = useState('')
     const [regPassword2, setRegPassword2]= useState('')
 
+
+    // Messages that will be shown to user if incorrect data is posted:
+    const loginButtonHttpResponse = useSelector(state => state.loginButtonHttpResponse);
+
+
+
     return (
         <ImageBackground 
         style = {styles.pageContent}
@@ -73,31 +77,40 @@ const LoginPageView = () => {
                         <Text style={styles.welcomeTextBottom}>Pick up where you left off</Text>
                     </View>
                     <View style={styles.forms}>
-                        <TextInput
-                        style={styles.inputForm}
-                        label="Email"
-                        mode={'outlined'}
-                        value={username}
-                        autoCapitalize = 'none'
-                        onChangeText={username => setUsername(username)}
-                        />
-                        <TextInput
-                        style={styles.inputForm}
-                        label="Password"
-                        mode={'outlined'}
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={password => setPassword(password)}
-                        />
-                        <Button
-                        style={styles.loginButton}
-                        uppercase={false}
-                        icon='login'
-                        mode="contained"
-                        onPress={() => userAuthentication(username, password, dispatch, history)}
-                        >
-                            Login
-                        </Button>
+                        <View style={styles.formAndMessageContainer}>
+                            <Text>{loginButtonHttpResponse.username[0]}</Text>
+                            <TextInput
+                            style={styles.inputForm}
+                            label="Email"
+                            mode={'outlined'}
+                            value={username}
+                            autoCapitalize = 'none'
+                            onChangeText={username => setUsername(username)}
+                            />
+                        </View>
+                        <View style={styles.formAndMessageContainer}>
+                            <Text>{loginButtonHttpResponse.password[0]}</Text>
+                            <TextInput
+                            style={styles.inputForm}
+                            label="Password"
+                            mode={'outlined'}
+                            secureTextEntry={true}
+                            value={password}
+                            onChangeText={password => setPassword(password)}
+                            />
+                        </View>
+                        <View>
+                            <Text>{loginButtonHttpResponse.non_field_errors[0]}</Text>
+                            <Button
+                            style={styles.loginButton}
+                            uppercase={false}
+                            icon='login'
+                            mode="contained"
+                            onPress={() => userAuthentication(username, password, dispatch, history)}
+                            >
+                                Login
+                            </Button>
+                        </View>
                     </View>
                 </Animated.View>
                 <Animated.View style={[styles.card, styles.cardSignUp, {
@@ -263,7 +276,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     cardLogin: {
-        height: '40%',
+        height: '47%',
     },
     cardSignUp: {
         height: '35%'
@@ -277,13 +290,14 @@ const styles = StyleSheet.create({
     cardTopText: {
         flex: 1,
         display: 'flex',
+        position: 'relative',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
     forms: {
         flex: 4,
-
+        position: 'relative',
     },
 
 
@@ -299,13 +313,24 @@ const styles = StyleSheet.create({
     },
     inputForm: {
         marginTop: 10,
+        width: '100%'
     },
     inputFormRegistration: {
         marginTop: 5,
     },
     loginButton: {
+        position: 'relative',
         fontFamily: 'Raleway-Regular',
         marginTop: 15,
+    },
+
+    formAndMessageContainer: {
+        position: 'relative',
+
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
 

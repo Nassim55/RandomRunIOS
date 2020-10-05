@@ -16,6 +16,7 @@ import {
     SET_IS_USER_INFO_MENU_OPEN,
     SET_IS_PROFILE_SHOWN,
     SET_IS_MAP_SHOWN,
+    SET_LOGIN_BUTTON_HTTP_RESPONSE,
 } from './actionTypes';
 
 const initialState = {
@@ -37,6 +38,7 @@ const initialState = {
     isUserInfoMenuOpen: false,
     isProfileShown: false,
     isMapShown: true,
+    loginButtonHttpResponse: {'password': [''], 'username': [''], 'non_field_errors': ['']},
 };
 
 // We now describe how our state will be modified when either addition or subtraction is called:
@@ -123,6 +125,11 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isMapShown: action.isMapShown
+            }
+        case SET_LOGIN_BUTTON_HTTP_RESPONSE:
+            return {
+                ...state,
+                loginButtonHttpResponse: action.loginButtonHttpResponse
             }
         default:
             return state;
