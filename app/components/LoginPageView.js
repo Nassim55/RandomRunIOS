@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-native";
@@ -11,10 +11,12 @@ import { LoginButton, AccessToken } from 'react-native-fbsdk';
 // Custom functions:
 import registerAccount from '../authentication/registerAccount';
 import userAuthentication from '../authentication/userAuthentication';
+import forgotPasswordRequest from '../functions/forgotPasswordReset';
 
 // Assets:
 import landingPageBackground from '../../images/landingPageBackground.jpg';
 
+const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 
@@ -41,7 +43,21 @@ const LoginPageView = () => {
         inputRange: [0, 1],
         outputRange: [width, 0],
     })
-    
+
+    const [isForgotPassword, setIsForgotPassword] = useState(false);
+    const transitionForgotPassword = useTransition(isForgotPassword, { duration: 400 })
+    const translateY = interpolate(transitionForgotPassword, {
+        inputRange: [0, 1],
+        outputRange: [0, -height],
+    })
+    const translateXForgotPassword = interpolate(transitionForgotPassword, {
+        inputRange: [0, 1],
+        outputRange: [width, 0],
+    })
+
+
+
+
 
     // State values for registration:
     const [regFirstName, setRegFirstName] = useState('')
@@ -69,8 +85,12 @@ const LoginPageView = () => {
                 </Text>
             </View>
             <View style={styles.cardsContainer}>
+
                 <Animated.View style={[styles.card, {
-                    transform: [{translateX: translateXLogin}]
+                    transform: [
+                        { translateX: translateXLogin },
+                        { translateY }
+                    ]
                 }]}>
                     <View style={styles.cardTopText}>
                         <Text style={styles.welcomeTextTop}>Already have an account?</Text>
@@ -110,11 +130,23 @@ const LoginPageView = () => {
                             >
                                 Login
                             </Button>
+                            <Button
+                            style={styles.loginButton}
+                            uppercase={false}
+                            color='grey'
+                            onPress={() => setIsForgotPassword(!isForgotPassword)}
+                            >
+                                Forgot password?
+                            </Button>
                         </View>
                     </View>
                 </Animated.View>
+
                 <Animated.View style={[styles.card, {
-                    transform: [{translateX: translateXLogin}]
+                    transform: [
+                        { translateX: translateXLogin },
+                        { translateY } 
+                    ]
                 }]}>
                     <View style={styles.cardTopText}>
                         <Text style={styles.welcomeTextTop}>New to Random Run?</Text>
@@ -228,6 +260,43 @@ const LoginPageView = () => {
                         </Button>
                     </View>
                 </Animated.View>
+
+                <Animated.View style={[styles.card, styles.cardSignUpDetails, {
+                        transform: [{translateX: translateXForgotPassword}]
+                    }]}>
+                        <View style={styles.cardTopText}>
+                            <Text style={styles.welcomeTextTop} onPress={() => setIsForgotPassword(!isForgotPassword)}>Forgot your password?</Text>
+                            <Text style={styles.welcomeTextBottom}>Enter your email to receive a reset form</Text>
+                        </View>
+                        <View style={styles.forms}>
+                            <View style={styles.formAndMessageContainer}>
+                                <Text style={styles.httpResponseText}></Text>
+                                <TextInput
+                                style={styles.inputForm}
+                                label="Email"
+                                mode={'outlined'}
+                                value={username}
+                                autoCapitalize = 'none'
+                                onChangeText={username => setUsername(username)}
+                                />
+                            </View>
+                            <View style={styles.formAndMessageContainer}>
+                                <Text style={styles.httpResponseText}></Text>
+                                <Button
+                                style={styles.loginButton}
+                                uppercase={false}
+                                icon='email'
+                                mode="contained"
+                                onPress={() => {
+                                    forgotPasswordRequest(username);
+                                }}
+                                >
+                                    Send Email
+                                </Button>
+                            </View>
+                        </View>
+                    </Animated.View>
+
             </View>
         </ImageBackground>
     );
@@ -269,6 +338,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         padding: 25,
+        paddingBottom: 15,
         borderRadius: 24,
         backgroundColor: 'white',
         opacity: 0.85,
