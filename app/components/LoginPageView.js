@@ -69,7 +69,7 @@ const LoginPageView = () => {
                 </Text>
             </View>
             <View style={styles.cardsContainer}>
-                <Animated.View style={[styles.card, styles.cardLogin, {
+                <Animated.View style={[styles.card, {
                     transform: [{translateX: translateXLogin}]
                 }]}>
                     <View style={styles.cardTopText}>
@@ -78,7 +78,7 @@ const LoginPageView = () => {
                     </View>
                     <View style={styles.forms}>
                         <View style={styles.formAndMessageContainer}>
-                            <Text>{loginButtonHttpResponse.username[0]}</Text>
+                            <Text style={styles.httpResponseText}>{loginButtonHttpResponse.username[0]}</Text>
                             <TextInput
                             style={styles.inputForm}
                             label="Email"
@@ -89,7 +89,7 @@ const LoginPageView = () => {
                             />
                         </View>
                         <View style={styles.formAndMessageContainer}>
-                            <Text>{loginButtonHttpResponse.password[0]}</Text>
+                            <Text style={styles.httpResponseText}>{loginButtonHttpResponse.password[0]}</Text>
                             <TextInput
                             style={styles.inputForm}
                             label="Password"
@@ -99,8 +99,8 @@ const LoginPageView = () => {
                             onChangeText={password => setPassword(password)}
                             />
                         </View>
-                        <View>
-                            <Text>{loginButtonHttpResponse.non_field_errors[0]}</Text>
+                        <View style={styles.formAndMessageContainer}>
+                            <Text style={styles.httpResponseText}>{loginButtonHttpResponse.non_field_errors[0]}</Text>
                             <Button
                             style={styles.loginButton}
                             uppercase={false}
@@ -113,7 +113,7 @@ const LoginPageView = () => {
                         </View>
                     </View>
                 </Animated.View>
-                <Animated.View style={[styles.card, styles.cardSignUp, {
+                <Animated.View style={[styles.card, {
                     transform: [{translateX: translateXLogin}]
                 }]}>
                     <View style={styles.cardTopText}>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
 
     },
     cardsContainer: {
-        flex: 4,
+        flex: 5,
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -272,14 +272,8 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         backgroundColor: 'white',
         opacity: 0.85,
-        marginBottom: 50,
         width: '100%',
-    },
-    cardLogin: {
-        height: '47%',
-    },
-    cardSignUp: {
-        height: '35%'
+        marginBottom: 40
     },
     cardSignUpDetails: {
         position: 'absolute'
@@ -288,7 +282,6 @@ const styles = StyleSheet.create({
 
 
     cardTopText: {
-        flex: 1,
         display: 'flex',
         position: 'relative',
         flexDirection: 'column',
@@ -296,8 +289,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     forms: {
-        flex: 4,
         position: 'relative',
+
     },
 
 
@@ -312,8 +305,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     inputForm: {
-        marginTop: 10,
-        width: '100%'
+        width: '100%',
     },
     inputFormRegistration: {
         marginTop: 5,
@@ -321,16 +313,16 @@ const styles = StyleSheet.create({
     loginButton: {
         position: 'relative',
         fontFamily: 'Raleway-Regular',
-        marginTop: 15,
+        marginTop: 5
     },
 
     formAndMessageContainer: {
         position: 'relative',
-
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
+        marginTop: 10,
+
     },
 
 
@@ -347,6 +339,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Raleway-Regular',
         fontSize: 44,
         color: 'white',
+    },
+
+    httpResponseText: {
+        fontFamily: 'Raleway-Regular',
+        fontSize: 12,
+        color: '#F24E4E',
     },
   });
 
