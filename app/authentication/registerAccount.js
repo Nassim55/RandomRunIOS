@@ -22,6 +22,7 @@ const registerAccount = async (first_name, last_name, username, email, password,
             }), 
         });
         const data = await response.json();
+        console.log(data)
 
         // The user is pushed to the map view if they registered successfully:
         if (data.token) {

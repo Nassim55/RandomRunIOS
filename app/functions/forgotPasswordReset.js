@@ -26,11 +26,14 @@ const forgotPasswordRequest = async (email) => {
             uploadData.append('email', email);
             uploadData.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
 
+            console.log(email)
+            console.log(csrfmiddlewaretoken)
+
             // Posting to the endpoint:
             const responsePOST = await fetch('http://127.0.0.1:8000/account/useraccount/password_reset', {
                 method: 'POST',
                 headers: {
-                    'Cookie': 'csrftoken=NcUrC1cSoRgTH5KucNeDosQD953smTvZ3TvzRHj1Ot5jVoxMifCNkCFMqLRWgkMT',
+                    'Cookie': `csrftoken=${csrfmiddlewaretoken}`,
                     'Content-Type': 'multipart/form-data'
                 },
                 body: uploadData,
@@ -43,23 +46,3 @@ const forgotPasswordRequest = async (email) => {
 };
 
 export default forgotPasswordRequest;
-
-
-
-
-
-// function getCookie(cname) {
-//     var name = cname + "=";
-//     var decodedCookie = decodeURIComponent(document.cookie);
-//     var ca = decodedCookie.split(';');
-//     for(var i = 0; i <ca.length; i++) {
-//       var c = ca[i];
-//       while (c.charAt(0) == ' ') {
-//         c = c.substring(1);
-//       }
-//       if (c.indexOf(name) == 0) {
-//         return c.substring(name.length, c.length);
-//       }
-//     }
-//     return "";
-//   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Dimensions } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { setIsProfileShown, setIsMapShown } from '../../store/actions';
@@ -9,6 +9,8 @@ import ImagePicker from 'react-native-image-picker';
 import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
 
+const height = Dimensions.get('window').height
+console.log(height)
 
 const ProfilePageView = (props) => {
     const dispatch = useDispatch();
@@ -23,11 +25,17 @@ const ProfilePageView = (props) => {
     const [profileImageSource, setProfileImageSource] = useState({ uri: '/Users/nassim/Documents/RandomRunIOS/images/profilePic.jpeg' })
 
     const transition = useTransition(isProfileEditShown, { duration: 400 })
-    const opacity = interpolate(transition, {
+    const translateYTop = interpolate(transition, {
         inputRange: [0, 1],
-        outputRange: [1, 0],
+        outputRange: [0, -height],
         extrapolate: Extrapolate.CLAMP,
     });
+    const translateYBottom = interpolate(transition, {
+        inputRange: [0, 1],
+        outputRange: [height, 0],
+        extrapolate: Extrapolate.CLAMP,
+    });
+
 
 
 
@@ -52,7 +60,7 @@ const ProfilePageView = (props) => {
                         </Pressable>
                     </View>
                     <Animated.View style={[styles.cardInnerViews, styles.profileInfoView, {
-                        opacity
+                        transform: [{translateY: translateYTop}]
                     }]}>
                         <Pressable 
                         style={styles.profileImageView}
@@ -83,7 +91,40 @@ const ProfilePageView = (props) => {
                             <Text style={styles.dateJoined}>Joined September 2020</Text>
                         </View>
                     </Animated.View>
-
+                    <Animated.View style={[styles.cardInnerViews, styles.profileInfoView, {
+                        transform: [{translateY: translateYBottom}]
+                    }]}>
+                        <View style={styles.profileImageAndNameView}>
+                            <Pressable
+                            style={styles.profileImage}
+                            onPress={() => {
+                                ImagePicker.showImagePicker(options, (response) => {                              
+                                    if (response.didCancel) {
+                                        console.log('User cancelled image picker');
+                                    } else if (response.error) {
+                                        console.log('ImagePicker Error: ', response.error);
+                                    } else {
+                                        const source = { uri: response.uri };
+                                        setProfileImageSource(source)
+                                        console.log(source);
+                                        // Would then send the image to the database, do a GET request
+                                        // for account information, update state, then UI would re-render
+                                        // to reflect this update in state...
+                                    }
+                                });
+                            }}
+                            >
+                                <Image
+                                source={profileImageSource}
+                                style={styles.profileImage}
+                                />
+                            </Pressable>
+                            <View style={styles.usernameView}>
+                                <Text style={styles.username}>nassim</Text>
+                                <Text style={styles.dateJoined}>Joined September 2020</Text>
+                            </View>
+                        </View>
+                    </Animated.View>
                 </View>
         </View>
     );
@@ -133,48 +174,49 @@ const styles = StyleSheet.create({
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
         height: '60%',
         width: '75%',
         backgroundColor: 'white',
         borderRadius: 24,
+        overflow: 'hidden'
     },
 
     cardInnerViews: {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         paddingLeft: 20,
         paddingRight: 20,
     },
     settingsIconView: {
-        flex: 1,
+        position: 'relative',
         borderTopRightRadius: 24,
         borderTopLeftRadius: 24,
         alignItems: 'flex-end',
+        padding: 10,
+
+        zIndex: 999
     },
     profileInfoView: {
-        flex: 8,
-        alignItems: 'center', 
-        borderBottomLeftRadius: 24,
-        borderBottomRightRadius: 24
+        position: 'absolute',
+        height: '100%',
+        borderRadius: 24,
+        alignItems: 'center',
+        borderWidth: 1
     },
 
 
 
-    profileImageView: {
-        flex: 3,
+    profileImageAndNameView: {
+        flex: 1,
         width: '100%',
-
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
     usernameView: {
-        flex: 1,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
