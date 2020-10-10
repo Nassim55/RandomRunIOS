@@ -6,12 +6,13 @@ import { TextInput, Button } from 'react-native-paper'
 
 import Animated, { interpolate } from 'react-native-reanimated';
 import { useTransition } from  "react-native-redash/lib/module/v1";
-import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk';
+//import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 // Custom functions:
 import registerAccount from '../authentication/registerAccount';
 import userAuthentication from '../authentication/userAuthentication';
 import forgotPasswordRequest from '../functions/forgotPasswordReset';
+import convertSocialAuthToken from '../functions/convertSocialAuthToken';
 
 // Assets:
 import landingPageBackground from '../../images/landingPageBackground.jpg';
@@ -170,49 +171,24 @@ const LoginPageView = () => {
                             uppercase={false}
                             icon='facebook'
                             mode="outlined"
-                            onPress={() => {
-                                LoginManager.logInWithPermissions(['public_profile', 'email']).then(
-                                    (result) => {
-                                        if (result.isCancelled) {
-                                            console.log('Login cancelled');
-                                        } else {
-                                            AccessToken.getCurrentAccessToken().then(
-                                                (accessToken) => {
-                                                    const convertSocialAuthToken = async () => {
-                                                        try {
-                                                            const uploadData = new FormData();
-                                                            uploadData.append('grant_type', 'convert_token');
-                                                            uploadData.append('client_id', '363738605007781')
-                                                            uploadData.append('client_secret', '02a8eb4f96f708edc23f572cff5e66eb')
-                                                            uploadData.append('backend', 'facebook')
-                                                            uploadData.append('token', accessToken.accessToken)
-            
-                                                            const response = await fetch('http://127.0.0.1:8000/socialauth/convert-token', {
-                                                                method: 'POST',
-                                                                headers: {
-                                                                'Content-Type': 'multipart/form-data',
-                                                                },
-                                                                body: uploadData
-                                                            });
-                                                            const data = await response.json();
-
-                                                            console.log(data)
-
-                                                            // Get the users token auth token through a get request to the account model then push
-                                                            // the user to the authourised map view.
-
-                                                        } catch (err) { if (console) console.error(err) }
-                                                    };
-                                                    convertSocialAuthToken();
-                                                }
-                                            )
-                                        }
-                                    },
-                                    (error) => {
-                                        console.log('Login fail with error: ' + error);
-                                    }
-                                );
-                            }}
+                            // onPress={() => {
+                            //     LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+                            //         (result) => {
+                            //             if (result.isCancelled) {
+                            //                 console.log('Login cancelled');
+                            //             } else {
+                            //                 AccessToken.getCurrentAccessToken().then(
+                            //                     (accessToken) => {
+                            //                         convertSocialAuthToken(accessToken.accessToken, dispatch, history);
+                            //                     }
+                            //                 )
+                            //             }
+                            //         },
+                            //         (error) => {
+                            //             console.log('Login fail with error: ' + error);
+                            //         }
+                            //     );
+                            // }}
                             >
                                 Log in with Facebook
                             </Button>

@@ -2,36 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>fb363738605007781</string>
-    </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>363738605007781</string>
-  <key>FacebookDisplayName</key>
-  <string>randomrun</string>
-  
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fb-messenger-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
-  
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>For choosing a profile photo.</string>
-  <key>NSCameraUsageDescription</key>
-  <string>For taking a profile photo.</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>For saving a photo.</string>
-  
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb363738605007781</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>363738605007781</string>
+	<key>FacebookDisplayName</key>
+	<string>randomrun</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For choosing a profile photo.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For taking a profile photo.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>For saving a photo.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

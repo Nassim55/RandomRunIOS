@@ -1,5 +1,5 @@
 import saveData from '../authentication/saveData';
-import { setUserAuthenticated, setUserAccountDetails, setLoginButtonHttpResponse } from '../../store/actions';
+import { setUserAuthenticated, setLoginButtonHttpResponse } from '../../store/actions';
 
 import pushUserToMapView from '../functions/pushUserToMapView';
 

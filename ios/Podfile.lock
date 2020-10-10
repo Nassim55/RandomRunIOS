@@ -14,20 +14,6 @@ PODS:
     - React-Core (= 1000.0.0)
     - React-jsi (= 1000.0.0)
     - ReactCommon/turbomodule/core (= 1000.0.0)
-  - FBSDKCoreKit (7.1.1):
-    - FBSDKCoreKit/Basics (= 7.1.1)
-    - FBSDKCoreKit/Core (= 7.1.1)
-  - FBSDKCoreKit/Basics (7.1.1)
-  - FBSDKCoreKit/Core (7.1.1):
-    - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (7.1.1):
-    - FBSDKLoginKit/Login (= 7.1.1)
-  - FBSDKLoginKit/Login (7.1.1):
-    - FBSDKCoreKit (~> 7.1.1)
-  - FBSDKShareKit (7.1.1):
-    - FBSDKShareKit/Share (= 7.1.1)
-  - FBSDKShareKit/Share (7.1.1):
-    - FBSDKCoreKit (~> 7.1.1)
   - Flipper (0.54.0):
     - Flipper-Folly (~> 2.2)
     - Flipper-RSocket (~> 1.1)
@@ -274,22 +260,6 @@ PODS:
     - React-jsi (= 1000.0.0)
     - React-perflogger (= 1000.0.0)
   - React-jsinspector (1000.0.0)
-  - react-native-fbsdk (2.0.0):
-    - React
-    - react-native-fbsdk/Core (= 2.0.0)
-    - react-native-fbsdk/Login (= 2.0.0)
-    - react-native-fbsdk/Share (= 2.0.0)
-  - react-native-fbsdk/Core (2.0.0):
-    - FBSDKCoreKit (~> 7.0)
-    - React
-  - react-native-fbsdk/Login (2.0.0):
-    - FBSDKLoginKit (~> 7.0)
-    - React
-  - react-native-fbsdk/Share (2.0.0):
-    - FBSDKShareKit (~> 7.0)
-    - React
-  - react-native-geolocation (2.0.2):
-    - React
   - react-native-image-picker (2.3.4):
     - React-Core
   - react-native-mapbox-gl (8.1.0-rc.4):
@@ -424,8 +394,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
-  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
@@ -454,9 +422,6 @@ SPEC REPOS:
     - boost-for-react-native
     - CocoaAsyncSocket
     - CocoaLibEvent
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FBSDKShareKit
     - Flipper
     - Flipper-DoubleConversion
     - Flipper-Folly
@@ -502,10 +467,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-fbsdk:
-    :path: "../node_modules/react-native-fbsdk"
-  react-native-geolocation:
-    :path: "../node_modules/@react-native-community/geolocation"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-mapbox-gl:
@@ -556,11 +517,8 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  FBLazyVector: 86626612edfd7641f1fb660bf490d2a71e671a39
-  FBReactNativeSpec: 2611a74991401b949c82fa20bc40d40be2de8347
-  FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
-  FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
-  FBSDKShareKit: 00a055c1999b099596e00212dd1c0600c6697019
+  FBLazyVector: 59e7cbc6f615544841803092e9664d0ade696e41
+  FBReactNativeSpec: 531ff8445cd5dea71fd06b9dbaa7d4f026d2e12f
   Flipper: be611d4b742d8c87fbae2ca5f44603a02539e365
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: c12092ea368353b58e992843a990a3225d4533c3
@@ -573,39 +531,37 @@ SPEC CHECKSUMS:
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   RCT-Folly: b39288cedafe50da43317ec7d91bcc8cc0abbf33
-  RCTRequired: e6e6900f3a45df0882d427da018304530221cab2
-  RCTTypeSafety: e6899771a91b014a104f0248269b2f230f2f8b10
-  React: 57adfcc881c9aca28b9bc70dd2adc51e585d1759
-  React-callinvoker: 884755b8a492ff1589ea983335475a04e3ffb1ca
-  React-Core: 454a56313c274cc4bbef9aaf6f6ab4ded8035124
-  React-CoreModules: b59e2e36d9adc4a0017611b5be021986d739c854
-  React-cxxreact: 12c27bc6a06d56f10d0b3065fc293a82411b7fc8
-  React-jsi: ec2f9a7b180c14318bf1ae6920e8711bffd090f7
-  React-jsiexecutor: 48f77d47c0a6955057e53d8c36e815e12447f527
-  React-jsinspector: 9b35a92dea0c0acba8639d4b296c44d25aef4d40
-  react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
-  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
+  RCTRequired: 0dc8a019c936d996266e89339cabff942f4519f4
+  RCTTypeSafety: 47c6947822c25ac010aec6e5a7f05f872f4a29b8
+  React: a067c4563578dc9c7dd5717c278f98b5bf335201
+  React-callinvoker: df652a2ff6de04feb292b4d4d45f42637f26c3ea
+  React-Core: b73f84f0d0b2644a147d2037baa1172fe9d53101
+  React-CoreModules: 594bd8918e3fc5a5722b4e0ab514fc7f1872d38d
+  React-cxxreact: b63fc1422083171263123a82b1e347a4e188f3fe
+  React-jsi: 02ac2eab84e5c5f4ff8263c067e7ce3cbdd3255d
+  React-jsiexecutor: 152d1c804380d22b946e51494aec435d25ccfccf
+  React-jsinspector: 39735ff2e984d9125ab07346875621391d0ebeb9
   react-native-image-picker: 32d1ad2c0024ca36161ae0d5c2117e2d6c441f11
   react-native-mapbox-gl: b2e4cee6a40cb713cd72846c9573cd5bc468c3d5
   react-native-sensitive-info: 50a0db17f996d019fd421793c1aa05c2b6be13de
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
-  React-perflogger: 324fb3dab537e0aae6ba5ac983a0cc1aacb8e501
-  React-RCTActionSheet: 74740ae5c59b45fce196379647a0b5fb4f5f2a73
-  React-RCTAnimation: 36c9bd30c6dbcb5f01a79be716798ccfd91f6d7c
-  React-RCTBlob: b38f629140a874aafd97adecd8f0dd5621c4b006
-  React-RCTImage: dcf4fe79b662682dff48bd81df0298ebc5da6420
-  React-RCTLinking: e04ed625a6b498e6d786f68896e8f692e5aa845a
-  React-RCTNetwork: 585b73b8380b9ceded0691669b134c9183321d07
-  React-RCTSettings: ae079042d9c63eb849e5f59b5981f0eda3bbb38b
-  React-RCTText: 206ec90607f450664437b3753257347eda9a59f8
-  React-RCTVibration: 030275c44dec05a6c2ce4738b1484b28f93ba624
-  React-runtimeexecutor: f42b83bb75a93d0a2dd10b5d60d1e0be9f77a495
-  ReactCommon: 3c6685615de8180b2c899dc6ac91e84a94de4d47
+  React-perflogger: 9941598a5a129c847520ef2b6ead444999e5a562
+  React-RCTActionSheet: ecb6c2eb6c71efa8a57d9ec639dde6d0216fd2ab
+  React-RCTAnimation: 2289634c68d384c0a0906c3b4ea3bec9e6a7979a
+  React-RCTBlob: 42dd4ec0eac70b2eefb959362545028c967a82a3
+  React-RCTImage: 41f13143ceda3a6b824975fc45c12ed65c3fae4b
+  React-RCTLinking: e2701f1f0f4995da3a535f32d931d02002e79d54
+  React-RCTNetwork: e9e63164964547b70eaa4cc3b752c3a5e438ced6
+  React-RCTSettings: a62f95f740e5713fe2ecd7507611d672fd3d0a91
+  React-RCTText: a557ccb495b1729176689c914e7ff0e003235190
+  React-RCTVibration: 6657aa78de1b253eb19e148143c2494246160cde
+  React-runtimeexecutor: a4c5a4ae3f77057449e3094b4eeca9f0ffc4abe8
+  ReactCommon: f2408febc9410705da639dd566e65c0e2c8dfca3
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  Yoga: 43477cf9038f4251d3dc2a0e7e79e4e6aa78b183
+  Yoga: 896a0bc5b05b6a33695f15abdc40e66bc158b9d8
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: fe457fd82c61a9e2874554a762612865a06c52ec
